@@ -53,21 +53,19 @@ public class MainActivity extends Activity implements SensorEventListener {
 	float Rot[] = null; //for gravity rotational data
 	//don't use R because android uses that for other stuff
 	float I[] = null; //for magnetic rotational data
-	float accels[] = new float[3];
+	float accels[] /*= new float[3]*/;
 	float mags[] = new float[3];
 	float[] values = new float[3];
 
-	double azimuth;
 	double pitch;
 	double roll;
 
-	double temp_azimuth;
 	double temp_pitch;
 	double temp_roll;
 
-	double c_azimuth = 0;
 	double c_pitch = 0;
 	double c_roll = 0;
+
 
 	private int positionNum;
 	private final Handler handler = new Handler();
@@ -102,7 +100,6 @@ public class MainActivity extends Activity implements SensorEventListener {
 		cal.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				c_azimuth = azimuth;
 				c_pitch = pitch;
 				c_roll = roll;
 			}
@@ -154,47 +151,48 @@ public class MainActivity extends Activity implements SensorEventListener {
 		flag = false;
 		senSensorManager = (SensorManager) this.getSystemService((SENSOR_SERVICE));
 		senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		senMagnetic = senSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-		senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-		senSensorManager.registerListener(this, senMagnetic, SensorManager.SENSOR_DELAY_NORMAL);
+//		senMagnetic = senSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+		senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+//		senSensorManager.registerListener(this, senMagnetic, SensorManager.SENSOR_DELAY_NORMAL);
 
 	}
 
 	@Override
 	public void onSensorChanged(SensorEvent sensorEvent) {
 		Sensor mySensor = sensorEvent.sensor;
-		switch (mySensor.getType()) {
-			case Sensor.TYPE_MAGNETIC_FIELD:
-				mags = sensorEvent.values.clone();
-				break;
-			case Sensor.TYPE_ACCELEROMETER:
-				accels = sensorEvent.values.clone();
-				break;
-		}
-		if (mags != null && accels != null) {
-			Rot = new float[9];
-			I = new float[9];
-			SensorManager.getRotationMatrix(Rot, I, accels, mags);
-			// Correct if screen is in Landscape
+		if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER)
+			accels = Calculate.lowPass(sensorEvent.values.clone(), accels);
 
-			float[] outR = new float[9];
-			SensorManager.remapCoordinateSystem(Rot, SensorManager.AXIS_X, SensorManager.AXIS_Z, outR);
-			SensorManager.getOrientation(outR, values);
-
-			temp_azimuth = values[0] * 57.2957795; //looks like we don't need this one
-			temp_pitch = values[1] * 57.2957795;
-			temp_roll = values[2] * 57.2957795;
-			mags = null; //retrigger the loop when things are repopulated
-			accels = null; ////retrigger the loop when things are repopulated
-
+//		if (mags != null && accels != null) {
+//			Rot = new float[9];
+//			I = new float[9];
+//			SensorManager.getRotationMatrix(Rot, I, accels, mags);
+//			// Correct if screen is in Landscape
+//
+//			float[] outR = new float[9];
+//			SensorManager.remapCoordinateSystem(Rot, SensorManager.AXIS_X, SensorManager.AXIS_Z, outR);
+//			SensorManager.getOrientation(outR, values);
+//
+//			temp_azimuth = values[0] * 57.2957795; //looks like we don't need this one
+//			temp_pitch = values[1] * 57.2957795;
+//			temp_roll = values[2] * 57.2957795;
+//			mags = null; //retrigger the loop when things are repopulated
+//			accels = null; ////retrigger the loop when things are repopulated
+//
+//			updateScreen();
+//		}
+		/*else */
+		if (/*mags == null &&*/ accels != null) {
+			pitch = Math.atan2(accels[1], accels[2]) * 180 / Math.PI;
+			roll = Math.atan2(-accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
 			updateScreen();
 		}
 	}
 
 	private void updateScreen() {
-		addNum(temp_roll, temp_pitch);
-		roll = Calculate.findMedian(rollArr.clone());
-		pitch = Calculate.findMedian(pitchArr.clone());
+//		addNum(temp_roll, temp_pitch);
+//		roll = Calculate.findMedian(rollArr.clone());
+//		pitch = Calculate.findMedian(pitchArr.clone());
 //
 //		tv.setText("azimuth = " + (Math.round(azimuth * 10)) / 10.0 + "\npitch = " + (Math.round(pitch * 10) / 10.0) + "\nroll = " + (Math.round(roll * 10) / 10.0));
 //		tv2.setText("azimuth = " + (Math.round((c_azimuth - azimuth) * 10)) / 10.0 + "\npitch = " + (Math.round((c_pitch - pitch) * 10) / 10.0) + "\nroll = " + (Math.round((c_roll - roll) * 10) / 10.0));
@@ -274,8 +272,8 @@ public class MainActivity extends Activity implements SensorEventListener {
 				isHanderRunning = false;
 
 				changeIndicator();
-				FrontIndi.setBackgroundResource(R.drawable.black_circle);
-				BackIndi.setBackgroundResource(R.drawable.black_circle);
+				FrontIndi.setBackgroundResource(R.drawable.white_circle);
+				BackIndi.setBackgroundResource(R.drawable.white_circle);
 				goal.setText(getResources().getString(R.string.balance));
 			}
 		}
@@ -343,8 +341,8 @@ public class MainActivity extends Activity implements SensorEventListener {
 				isHanderRunning = false;
 
 				changeIndicator();
-				LeftIndi.setBackgroundResource(R.drawable.black_circle);
-				RightIndi.setBackgroundResource(R.drawable.black_circle);
+				LeftIndi.setBackgroundResource(R.drawable.white_circle);
+				RightIndi.setBackgroundResource(R.drawable.white_circle);
 //			if (goal.getText().equals(getResources().getString(R.string.balance)))
 				goal.setText(getResources().getString(R.string.balance));
 			}

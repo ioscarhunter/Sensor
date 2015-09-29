@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_grey_300"
+    android:background="@color/material_grey_600"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -60,9 +60,10 @@
                     android:layout_height="40dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/black_circle"
+                    android:background="@drawable/white_circle"
                     android:enabled="false"
                     android:text="@string/up"
+                    android:textColor="@color/blue_royal"
                     android:textSize="30sp"/>
 
                 <Button
@@ -71,9 +72,10 @@
                     android:layout_height="40dp"
                     android:layout_alignLeft="@+id/front"
                     android:layout_alignParentBottom="true"
-                    android:background="@drawable/black_circle"
+                    android:background="@drawable/white_circle"
                     android:enabled="false"
                     android:text="@string/down"
+                    android:textColor="@color/blue_royal"
                     android:textSize="30sp"/>
 
                 <TextView
@@ -84,6 +86,7 @@
                     android:layout_centerHorizontal="true"
                     android:paddingRight="40dp"
                     android:text="Large Text"
+                    android:textColor="@color/white_alpha"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="30sp"/>
 
@@ -112,8 +115,9 @@
                     android:layout_height="40dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/black_circle"
+                    android:background="@drawable/white_circle"
                     android:enabled="false"
+                    android:textColor="@color/blue_royal"
                     android:text="@string/left"
                     android:textSize="30sp"/>
 
@@ -123,8 +127,9 @@
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/black_circle"
+                    android:background="@drawable/white_circle"
                     android:enabled="false"
+                    android:textColor="@color/blue_royal"
                     android:text="@string/right"
                     android:textSize="30sp"/>
 
@@ -137,6 +142,7 @@
                     android:layout_alignParentTop="true"
                     android:paddingTop="50dp"
                     android:text="Large Text"
+                    android:textColor="@color/white_arctic"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="30sp"/>
 

@@ -18,6 +18,7 @@
     <color name="black_alpha">#4E000000</color>
     <color name="black">#FE000000</color>
     <color name="clear">#00000000</color>
+    <color name="white_alpha">#AAFFFFFF</color>
 
     <!--connected-->
     <color name="status_connected">#1565C0</color>

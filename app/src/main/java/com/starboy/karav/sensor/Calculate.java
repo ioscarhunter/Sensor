@@ -1,6 +1,8 @@
 package com.starboy.karav.sensor;
 
 public class Calculate {
+	static float ALPHA = 0.25f;
+
 	static int Partition(double[] a, int p, int r) {
 		double x = a[r];
 
@@ -51,5 +53,13 @@ public class Calculate {
 			double toZero = number - down;
 			return (int) Math.round(toZero * 300 / (up - down)) / 3;
 		}
+	}
+
+	static float[] lowPass(float[] input, float[] output) {
+		if (output == null) return input;
+		for (int i = 0; i < input.length; i++) {
+			output[i] = output[i] + ALPHA * (input[i] - output[i]);
+		}
+		return output;
 	}
 }
