@@ -10,5 +10,7 @@
     <dimen name="card_margin">4dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="goal_size">40sp</dimen>
-
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="chronoSize">40sp</dimen>
+    <dimen name="max_recycler">300dp</dimen>
 </resources>

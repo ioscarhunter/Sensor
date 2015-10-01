@@ -62,4 +62,5 @@
     <color name="window_background">#FFF5F5F5</color>
     <color name="dark_grey">#505050</color>
     <color name="med_grey">#808080</color>
+    <color name="secondary_text_material_light">#d2d2d2</color>
 </resources>

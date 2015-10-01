@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <com.starboy.karav.sensor.SquareView
+        <com.starboy.karav.sensor.Meter.SquareView
             android:id="@+id/sq"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -149,7 +149,7 @@
 
 
             </RelativeLayout>
-        </com.starboy.karav.sensor.SquareView>
+        </com.starboy.karav.sensor.Meter.SquareView>
 
     </RelativeLayout>
 

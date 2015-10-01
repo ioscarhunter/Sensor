@@ -1,4 +1,4 @@
-package com.starboy.karav.sensor;
+package com.starboy.karav.sensor.Meter;
 
 import android.app.Activity;
 import android.hardware.Sensor;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.starboy.karav.sensor.R;
 
 
 public class MainActivity extends Activity implements SensorEventListener {
@@ -210,7 +212,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 	private void setButtonColour() {
 		if ((getPositionNum() == FNUM) || (getPositionNum() == BNUM)) {
 			if (c_pitch - pitch >= 7) {
-				if (c_pitch - pitch <= 9) {
+				if (c_pitch - pitch <= 8) {
 					if (getPositionNum() == FNUM) {
 						FrontIndi.setBackgroundResource(R.drawable.green_circle);
 						goal.setText(getResources().getString(R.string.goal));

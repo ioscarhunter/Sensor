@@ -14,7 +14,7 @@
     android:weightSum="1"
     tools:context=".MainActivity">
 
-    <com.starboy.karav.sensor.SquareView
+    <com.starboy.karav.sensor.Meter.SquareView
         android:id="@+id/sq"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -150,7 +150,7 @@
 
 
         </RelativeLayout>
-    </com.starboy.karav.sensor.SquareView>
+    </com.starboy.karav.sensor.Meter.SquareView>
 
 
     <android.support.v7.widget.CardView
@@ -191,12 +191,13 @@
                 android:text="Calibrate"/>
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="New Text"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:text="New Text"/>
+                android:layout_alignParentEnd="true"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
@@ -211,7 +212,8 @@
         android:elevation="@dimen/card_elevation"
         android:padding="@dimen/card_margin"
         android:paddingLeft="@dimen/card_padding"
-        android:paddingRight="@dimen/card_padding">
+        android:paddingRight="@dimen/card_padding"
+        android:paddingBottom="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -221,15 +223,22 @@
             <Chronometer
                 android:id="@+id/chronometer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/chronoSize"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="New Button"
+                android:text="@string/stop"
+                android:textSize="20sp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/c_unbalance"
+                android:textColor="@color/white_pure"
                 />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
@@ -249,16 +258,31 @@
             android:layout_alignParentLeft="true"
             >
 
+            <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/timeProgressBar"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:indeterminate="false"
+                android:layout_alignParentTop="true"
+                android:layout_alignBottom="@+id/goal"
+                app:rcBackgroundColor="@color/white_pure"
+                app:rcMax="100"
+                app:rcProgress="90"
+                app:rcRadius="0dp"/>
             <TextView
                 android:id="@+id/goal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
                 android:gravity="center_vertical|center|center_horizontal"
                 android:text="@string/goal"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="@dimen/goal_size"/>
+                android:textSize="@dimen/goal_size"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

@@ -11,4 +11,8 @@
     <string name="right">▶</string>
     <string name="up">▲</string>
     <string name="down">▼</string>
+    <string name="title_activity_beforestart">Beforestart</string>
+    <string name="title_activity_summary">Summary</string>
+    <string name="stop">STOP</string>
+
 </resources>

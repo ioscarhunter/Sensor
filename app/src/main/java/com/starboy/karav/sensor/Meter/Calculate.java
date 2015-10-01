@@ -1,4 +1,4 @@
-package com.starboy.karav.sensor;
+package com.starboy.karav.sensor.Meter;
 
 public class Calculate {
 	static float ALPHA = 0.25f;
