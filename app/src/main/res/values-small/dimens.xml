@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cardwidthsize">280dp</dimen>
+    <dimen name="goal_size">20sp</dimen>
+    <dimen name="chronoSize">20sp</dimen>
+</resources>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="goal_size">80sp</dimen>
+    <dimen name="cardwidthsize">400dp</dimen>
 </resources>

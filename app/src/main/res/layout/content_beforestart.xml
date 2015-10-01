@@ -5,38 +5,221 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.starboy.karav.sensor.BeforeStart.Beforestart"
-    tools:showIn="@layout/activity_beforestart">
+    tools:showIn="@layout/activity_beforestart"
+    >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ScrollView
+        android:id="@+id/ScrollView01"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/clear"
-            android:gravity="center"
-            android:scrollbars="vertical"
-            android:visibility="visible"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/content_funtionselect"/>
-
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="@dimen/cardwidthsize"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView3"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
+            android:gravity="center_horizontal">
 
-    </RelativeLayout>
+            <android.support.v7.widget.CardView
+                android:id="@+id/card1"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/min_cardexpand"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/card_margin"
+                android:layout_marginTop="@dimen/card_margin"
+                android:paddingBottom="@dimen/card_padding"
+                android:paddingLeft="@dimen/card_padding"
+                android:paddingRight="@dimen/card_padding"
+                android:paddingTop="@dimen/card_padding">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/Deep_Purple_300">
 
+                    <FrameLayout
+                        android:id="@+id/detailsetting1"
+                        android:name="com.starboy.karav.sensor.BeforeStart.detailsetting"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="50dp"
+                        android:background="@color/white_pure"
+                        tools:layout="@layout/fragment_detailsetting"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/min_cardexpand"
+                        android:text="Four Directions"
+                        android:id="@+id/object1"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:background="@color/Deep_Purple_300"
+                        android:textColor="@color/white_pure"
+                        android:gravity="left|center_vertical"
+                        android:textSize="@dimen/titleSize"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:paddingLeft="@dimen/card_margin_top"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card2"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/min_cardexpand"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/card1"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/card_margin"
+                android:layout_marginTop="@dimen/card_margin"
+                android:paddingBottom="@dimen/card_padding"
+                android:paddingLeft="@dimen/card_padding"
+                android:paddingRight="@dimen/card_padding"
+                android:paddingTop="@dimen/card_padding">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/Deep_Purple_300">
+
+                    <FrameLayout
+                        android:id="@+id/detailsetting2"
+                        android:name="com.starboy.karav.sensor.BeforeStart.detailsetting"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="50dp"
+                        android:background="@color/white_pure"
+                        tools:layout="@layout/fragment_detailsetting"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/min_cardexpand"
+                        android:text="Two Directions"
+                        android:id="@+id/object2"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:background="@color/Deep_Purple_300"
+                        android:textColor="@color/white_pure"
+                        android:gravity="left|center_vertical"
+                        android:textSize="@dimen/titleSize"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:paddingLeft="@dimen/card_margin_top"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card3"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/card2"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/card_margin"
+                android:layout_marginTop="@dimen/card_margin"
+                android:paddingBottom="@dimen/card_padding"
+                android:paddingLeft="@dimen/card_padding"
+                android:paddingRight="@dimen/card_padding"
+                android:paddingTop="@dimen/card_padding">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/Deep_Purple_300">
+
+                    <FrameLayout
+                        android:id="@+id/detailsetting3"
+                        android:name="com.starboy.karav.sensor.BeforeStart.detailsetting"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="50dp"
+                        android:background="@color/white_pure"
+                        tools:layout="@layout/fragment_detailsetting"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/min_cardexpand"
+                        android:text="One Direction"
+                        android:id="@+id/object3"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:background="@color/Deep_Purple_300"
+                        android:textColor="@color/white_pure"
+                        android:gravity="left|center_vertical"
+                        android:textSize="@dimen/titleSize"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:paddingLeft="@dimen/card_margin_top"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/card3"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/card_margin"
+                android:layout_marginTop="@dimen/card_margin"
+                android:paddingBottom="@dimen/card_padding"
+                android:paddingLeft="@dimen/card_padding"
+                android:paddingRight="@dimen/card_padding"
+                android:paddingTop="@dimen/card_padding"
+                android:id="@+id/card4">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/Deep_Purple_300">
+
+                    <FrameLayout
+                        android:id="@+id/detailsetting4"
+                        android:name="com.starboy.karav.sensor.BeforeStart.detailsetting"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="50dp"
+                        android:background="@color/white_pure"
+                        tools:layout="@layout/fragment_detailsetting"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/min_cardexpand"
+                        android:text="Static"
+                        android:id="@+id/object4"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:background="@color/Deep_Purple_300"
+                        android:textColor="@color/white_pure"
+                        android:gravity="left|center_vertical"
+                        android:textSize="@dimen/titleSize"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:paddingLeft="@dimen/card_margin_top"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

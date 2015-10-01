@@ -2,8 +2,10 @@
     <string name="app_name">Sensor</string>
 
     <string name="hello_world">Hello world!</string>
+
     <string name="action_settings">Settings</string>
     <string name="list">List of Sensor Supported</string>
+
     <string name="goal">GOAL</string>
     <string name="unbalance">UNBALANCE</string>
     <string name="balance">BALANCE</string>
@@ -11,8 +13,60 @@
     <string name="right">▶</string>
     <string name="up">▲</string>
     <string name="down">▼</string>
-    <string name="title_activity_beforestart">Beforestart</string>
-    <string name="title_activity_summary">Summary</string>
-    <string name="stop">STOP</string>
 
+    <string name="title_activity_beforestart">Beforestart</string>
+
+
+    <!--  BluetoothChat -->
+    <string name="send">Send</string>
+    <string name="not_connected">Not connected</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
+    <string name="title_connecting">Connecting...</string>
+    <string name="title_connected_to">Connected to </string>
+    <string name="title_not_connected">Not Connected</string>
+
+    <!--  DeviceListActivity -->
+    <string name="scanning">scanning for devices...</string>
+    <string name="select_device">Select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="button_scan">Scan for devices</string>
+
+    <!-- Options Menu -->
+    <string name="secure_connect">Connect a device - Secure</string>
+    <string name="insecure_connect">Connect a device - Insecure</string>
+    <string name="discoverable">Make discoverable</string>
+    <string name="title_activity_after_connect">After_connect</string>
+    <string name="title_activity_reciever">Receiver</string>
+    <string name="wait_for_connect">Waiting for connection</string>
+    <string name="title_activity_sender">Sender</string>
+
+    <!--receiver-->
+    <string name="status_unbalance">UNBALANCE</string>
+    <string name="status_balance">BALANCE</string>
+    <string name="start">start</string>
+    <string name="stop">STOP</string>
+    <string name="pause">pause</string>
+    <string name="resume">resume</string>
+    <string name="total_time">Total Time</string>
+    <string name="make_discover">Discoverable</string>
+    <string name="title_activity_summary">Summary</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="level_1">A</string>
+    <string name="level_2">B</string>
+    <string name="level_3">C</string>
+    <string name="level_4">D</string>
+    <string name="level_5">E</string>
+    <string name="level">Level</string>
+    <string name="time">Time</string>
+    <string name="title_activity_database">DatabaseActivity</string>
+    <string name="database">Recently Activity</string>
+    <string name="plus_button">+</string>
+    <string name="minus_but">-</string>
+    <string name="name">Name</string>
+    <string name="title_activity_name_list">NameList</string>
 </resources>

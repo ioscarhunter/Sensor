@@ -27,6 +27,8 @@ public class detailsetting extends Fragment {
 	private String mParam1;
 	private String mParam2;
 
+	private View view;
+
 	private OnFragmentInteractionListener mListener;
 
 	/**
