@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.FrameLayout;
 
 import com.starboy.karav.sensor.Meter.MainActivity;
 import com.starboy.karav.sensor.R;
@@ -28,7 +27,7 @@ public class Beforestart extends AppCompatActivity {
 
 	private CardView card[];
 	private Button tog[];
-	private FrameLayout frame[];
+	private int frame[];
 
 	private Button tog1;
 	private Button tog2;
@@ -50,7 +49,7 @@ public class Beforestart extends AppCompatActivity {
 		final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 		card = new CardView[NUMCARD];
 		tog = new Button[NUMCARD];
-		frame = new FrameLayout[NUMCARD];
+		frame = new int[NUMCARD];
 		descriptionViewFullHeight = getResources().getDimensionPixelSize(R.dimen.max_cardexpand);
 
 		card[0] = (CardView) findViewById(R.id.card1);
@@ -63,33 +62,39 @@ public class Beforestart extends AppCompatActivity {
 		tog[2] = (Button) findViewById(R.id.object3);
 		tog[3] = (Button) findViewById(R.id.object4);
 
+		frame[0] = R.id.detailsetting1;
+		frame[1] = R.id.detailsetting2;
+		frame[2] = R.id.detailsetting3;
+		frame[3] = R.id.detailsetting4;
+
+
+
 		cardon = new boolean[NUMCARD];
 		for (int i = 0; i < NUMCARD; i++) {
 			final CardView cv = card[i];
-			final Button Togi = tog[i];
+			final Button togi = tog[i];
 			final int fi = i;
 			cv.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 				@Override
 				public boolean onPreDraw() {
-					Togi.getViewTreeObserver().removeOnPreDrawListener(this);
-					// save the full height
-
+					togi.getViewTreeObserver().removeOnPreDrawListener(this);
 
 					// initially changing the height to min height
 					ViewGroup.LayoutParams layoutParams = cv.getLayoutParams();
 					layoutParams.height = (int) Beforestart.this.getResources().getDimension(R.dimen.min_cardexpand);
 					cv.setLayoutParams(layoutParams);
-
 					return true;
 				}
 			});
-			tog[i].setOnClickListener(new View.OnClickListener() {
+			togi.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					Log.d(TAG, "card" + fi);
 					CardtoggleManager(fi);
 				}
 			});
+
+			getFragmentManager().beginTransaction().add(frame[fi], detailsetting.newInstance(i)).commit();
 		}
 
 		fab.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +102,6 @@ public class Beforestart extends AppCompatActivity {
 			public void onClick(View view) {
 				switch (getCurrentOpen()) {
 					case 0:
-
 						Intent myIntent = new Intent(Beforestart.this, MainActivity.class);
 //				myIntent.putExtra("key", value); //Optional parameters
 						Beforestart.this.startActivity(myIntent);
@@ -129,49 +133,51 @@ public class Beforestart extends AppCompatActivity {
 		for (int i = 0; i < NUMCARD; i++) {
 			if (cardon[i]) {
 				if (num == i) {
-					toggleProductDescriptionHeight(card[i]);
+					toggleProductDescriptionHeight(i);
 					tog[i].setBackgroundColor(getResources().getColor(R.color.Deep_Purple_300));
 					cardon[i] = false;
 					return;
 				} else {
-					toggleProductDescriptionHeight(card[i]);
+					toggleProductDescriptionHeight(i);
 					tog[i].setBackgroundColor(getResources().getColor(R.color.Deep_Purple_300));
 					cardon[i] = false;
 				}
 			} else if (num == i) {
-				toggleProductDescriptionHeight(card[i]);
+				toggleProductDescriptionHeight(i);
 				tog[i].setBackgroundColor(getResources().getColor(R.color.Deep_Purple_500));
 				cardon[i] = true;
 			}
 		}
 	}
 
-	private void toggleProductDescriptionHeight(final CardView cv) {
+	private void toggleProductDescriptionHeight(final int num) {
 
 		int descriptionViewMinHeight = (int) Beforestart.this.getResources().getDimension(R.dimen.min_cardexpand);
-		if (cv.getHeight() == descriptionViewMinHeight) {
+		if (card[num].getHeight() == descriptionViewMinHeight) {
 			// expand
-			ValueAnimator anim = ValueAnimator.ofInt(cv.getMeasuredHeightAndState(), descriptionViewFullHeight);
+			ValueAnimator anim = ValueAnimator.ofInt(card[num].getMeasuredHeightAndState(), descriptionViewFullHeight);
 			anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 				@Override
 				public void onAnimationUpdate(ValueAnimator valueAnimator) {
 					int val = (Integer) valueAnimator.getAnimatedValue();
-					ViewGroup.LayoutParams layoutParams = cv.getLayoutParams();
+					ViewGroup.LayoutParams layoutParams = card[num].getLayoutParams();
 					layoutParams.height = val;
-					cv.setLayoutParams(layoutParams);
+					card[num].setLayoutParams(layoutParams);
+					cardon[num] = true;
 				}
 			});
 			anim.start();
 		} else {
 			// collapse
-			ValueAnimator anim = ValueAnimator.ofInt(cv.getMeasuredHeightAndState(), descriptionViewMinHeight);
+			ValueAnimator anim = ValueAnimator.ofInt(card[num].getMeasuredHeightAndState(), descriptionViewMinHeight);
 			anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 				@Override
 				public void onAnimationUpdate(ValueAnimator valueAnimator) {
 					int val = (Integer) valueAnimator.getAnimatedValue();
-					ViewGroup.LayoutParams layoutParams = cv.getLayoutParams();
+					ViewGroup.LayoutParams layoutParams = card[num].getLayoutParams();
 					layoutParams.height = val;
-					cv.setLayoutParams(layoutParams);
+					card[num].setLayoutParams(layoutParams);
+					cardon[num] = false;
 				}
 			});
 			anim.start();
