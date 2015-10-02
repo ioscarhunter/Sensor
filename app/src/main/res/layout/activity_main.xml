@@ -272,7 +272,8 @@
                 android:layout_alignBottom="@+id/goal"
                 app:rcBackgroundColor="@color/white_pure"
                 app:rcMax="100"
-                app:rcProgress="90"
+                app:rcProgressColor="@color/c_balance"
+                app:rcProgress="0"
                 app:rcRadius="0dp"/>
             <TextView
                 android:id="@+id/goal"

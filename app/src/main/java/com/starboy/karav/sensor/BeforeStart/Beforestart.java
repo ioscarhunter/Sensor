@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.starboy.karav.sensor.Meter.MainActivity;
 import com.starboy.karav.sensor.R;
@@ -28,6 +29,8 @@ public class Beforestart extends AppCompatActivity {
 	private CardView card[];
 	private Button tog[];
 	private int frame[];
+	private FrameLayout framelayout[];
+
 
 	private Button tog1;
 	private Button tog2;
@@ -36,7 +39,7 @@ public class Beforestart extends AppCompatActivity {
 
 	private boolean cardon[];
 
-	private int descriptionViewFullHeight;
+	private int[] descriptionViewFullHeight;
 
 
 	@Override
@@ -50,7 +53,10 @@ public class Beforestart extends AppCompatActivity {
 		card = new CardView[NUMCARD];
 		tog = new Button[NUMCARD];
 		frame = new int[NUMCARD];
-		descriptionViewFullHeight = getResources().getDimensionPixelSize(R.dimen.max_cardexpand);
+		framelayout = new FrameLayout[NUMCARD];
+
+		descriptionViewFullHeight = new int[NUMCARD];
+//		descriptionViewFullHeight = getResources().getDimensionPixelSize(R.dimen.max_cardexpand);
 
 		card[0] = (CardView) findViewById(R.id.card1);
 		card[1] = (CardView) findViewById(R.id.card2);
@@ -68,17 +74,18 @@ public class Beforestart extends AppCompatActivity {
 		frame[3] = R.id.detailsetting4;
 
 
-
 		cardon = new boolean[NUMCARD];
 		for (int i = 0; i < NUMCARD; i++) {
 			final CardView cv = card[i];
 			final Button togi = tog[i];
 			final int fi = i;
+			framelayout[fi] = (FrameLayout) findViewById(frame[fi]);
+			getFragmentManager().beginTransaction().add(frame[fi], detailsetting.newInstance(i)).commit();
 			cv.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 				@Override
 				public boolean onPreDraw() {
 					togi.getViewTreeObserver().removeOnPreDrawListener(this);
-
+					descriptionViewFullHeight[fi] = getResources().getDimensionPixelSize(R.dimen.max_cardexpand);//framelayout[fi].getHeight();
 					// initially changing the height to min height
 					ViewGroup.LayoutParams layoutParams = cv.getLayoutParams();
 					layoutParams.height = (int) Beforestart.this.getResources().getDimension(R.dimen.min_cardexpand);
@@ -94,7 +101,6 @@ public class Beforestart extends AppCompatActivity {
 				}
 			});
 
-			getFragmentManager().beginTransaction().add(frame[fi], detailsetting.newInstance(i)).commit();
 		}
 
 		fab.setOnClickListener(new View.OnClickListener() {
@@ -150,12 +156,13 @@ public class Beforestart extends AppCompatActivity {
 		}
 	}
 
+
 	private void toggleProductDescriptionHeight(final int num) {
 
 		int descriptionViewMinHeight = (int) Beforestart.this.getResources().getDimension(R.dimen.min_cardexpand);
 		if (card[num].getHeight() == descriptionViewMinHeight) {
 			// expand
-			ValueAnimator anim = ValueAnimator.ofInt(card[num].getMeasuredHeightAndState(), descriptionViewFullHeight);
+			ValueAnimator anim = ValueAnimator.ofInt(card[num].getMeasuredHeightAndState(), descriptionViewFullHeight[num]);
 			anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 				@Override
 				public void onAnimationUpdate(ValueAnimator valueAnimator) {

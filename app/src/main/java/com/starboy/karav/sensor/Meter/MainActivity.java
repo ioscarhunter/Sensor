@@ -6,15 +6,15 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.CountDownTimer;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.starboy.karav.sensor.R;
 
 
@@ -43,6 +43,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 	private Button LeftIndi;
 	private Button RightIndi;
 	private TextView goal;
+	private TextView count_tv;
 
 	private RelativeLayout FBlayout;
 	private RelativeLayout LRlayout;
@@ -68,19 +69,22 @@ public class MainActivity extends Activity implements SensorEventListener {
 	double c_pitch = 0;
 	double c_roll = 0;
 
+	private int countgoal;
+	private int[] insctuctionSet;
+
+	private RoundCornerProgressBar progressBar;
 
 	private int positionNum;
-	private final Handler handler = new Handler();
+	private CountDownTimer handler;
 	private boolean isHanderRunning;
 	private Runnable runable;
-	int delayMillis = 3000;
+	private int delayMillis = 3000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		tv = (TextView) findViewById(R.id.textView);
-		tv2 = (TextView) findViewById(R.id.textView2);
 		pit = (TextView) findViewById(R.id.pitch);
 		rol = (TextView) findViewById(R.id.roll);
 		cal = (Button) findViewById(R.id.button);
@@ -94,9 +98,23 @@ public class MainActivity extends Activity implements SensorEventListener {
 		LRlayout = (RelativeLayout) findViewById(R.id.LRLayout);
 
 		goal = (TextView) findViewById(R.id.goal);
+		count_tv = (TextView) findViewById(R.id.count);
+
+		progressBar = (RoundCornerProgressBar) findViewById(R.id.timeProgressBar);
 
 		isHanderRunning = false;
 		positionNum = 0;
+
+		progressBar.setMax(delayMillis);
+		handler = new CountDownTimer(1, 1) {
+			@Override
+			public void onTick(long l) {
+			}
+
+			@Override
+			public void onFinish() {
+			}
+		};
 		changeIndicator();
 
 		cal.setOnClickListener(new View.OnClickListener() {
@@ -113,49 +131,16 @@ public class MainActivity extends Activity implements SensorEventListener {
 		pitchArr = new double[4];
 		rollArr = new double[4];
 //	    if (ybar != null) {
-//		    ybar.setMax((int) (100));
-//		    ybar.setOnTouchListener(new View.OnTouchListener() {
-//			    @Override
-//			    public boolean onTouch(View view, MotionEvent motionEvent) {
-//				    return true;
-//			    }
-//		    });
-//		    ybar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//
-//			    @Override
-//			    public void onStopTrackingTouch(SeekBar arg0) {
-//			    }
-//
-//			    @Override
-//			    public void onStartTrackingTouch(SeekBar arg0) {
-//			    }
-//
-//			    @Override
-//			    public void onProgressChanged(SeekBar timerBar, int arg1, boolean arg2) {
-//				    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.plussign);
-//				    Bitmap bmp = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-//				    Canvas c = new Canvas(bmp);
-//				    String text = "12";//Integer.toString(timerBar.getProgress());
-//				    Paint p = new Paint();
-//				    p.setTypeface(Typeface.DEFAULT_BOLD);
-//				    p.setTextSize(14);
-//				    p.setColor(0xFFFF0000);
-//				    int width = (int) p.measureText(text);
-//				    int yPos = (int) ((c.getHeight() / 2) - ((p.descent() + p.ascent()) / 2));
-//				    c.drawText(text, (bmp.getWidth() - width) / 2, yPos, p);
-//				    timerBar.setThumb(new BitmapDrawable(getResources(), bmp));
-//			    }
-//
-//		    });
-//		    ybar.setProgress(0);
-//	    }
-//        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
 		flag = false;
 		senSensorManager = (SensorManager) this.getSystemService((SENSOR_SERVICE));
 		senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 //		senMagnetic = senSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 		senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_GAME);
 //		senSensorManager.registerListener(this, senMagnetic, SensorManager.SENSOR_DELAY_NORMAL);
+
+		countgoal = 0;
+		insctuctionSet = new int[]{0, 1};
 
 	}
 
@@ -165,25 +150,6 @@ public class MainActivity extends Activity implements SensorEventListener {
 		if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER)
 			accels = Calculate.lowPass(sensorEvent.values.clone(), accels);
 
-//		if (mags != null && accels != null) {
-//			Rot = new float[9];
-//			I = new float[9];
-//			SensorManager.getRotationMatrix(Rot, I, accels, mags);
-//			// Correct if screen is in Landscape
-//
-//			float[] outR = new float[9];
-//			SensorManager.remapCoordinateSystem(Rot, SensorManager.AXIS_X, SensorManager.AXIS_Z, outR);
-//			SensorManager.getOrientation(outR, values);
-//
-//			temp_azimuth = values[0] * 57.2957795; //looks like we don't need this one
-//			temp_pitch = values[1] * 57.2957795;
-//			temp_roll = values[2] * 57.2957795;
-//			mags = null; //retrigger the loop when things are repopulated
-//			accels = null; ////retrigger the loop when things are repopulated
-//
-//			updateScreen();
-//		}
-		/*else */
 		if (/*mags == null &&*/ accels != null) {
 			pitch = Math.atan2(accels[1], accels[2]) * 180 / Math.PI;
 			roll = Math.atan2(-accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
@@ -215,139 +181,160 @@ public class MainActivity extends Activity implements SensorEventListener {
 				if (c_pitch - pitch <= 8) {
 					if (getPositionNum() == FNUM) {
 						FrontIndi.setBackgroundResource(R.drawable.green_circle);
+
+						goal.setTextColor(getResources().getColor(R.color.white_pure));
 						goal.setText(getResources().getString(R.string.goal));
-						isHanderRunning = true;
-						runable = new Runnable() {
-							@Override
-							public void run() {
-								Log.d(TAG, "num = " + getPositionNum());
-								//Do something after 100ms
-								getNewNum(1);
-								changeIndicator();
-								isHanderRunning = false;
-							}
-						};
-						handler.postDelayed(runable, delayMillis);
+
+						if (!isHanderRunning) {
+							isHanderRunning = true;
+							stayStill();
+						}
 					}
 				} else {
 					if (getPositionNum() == FNUM) {
-						handler.removeCallbacksAndMessages(null);
+						handler.cancel();
 						isHanderRunning = false;
 					}
 					if (FrontIndi.getVisibility() == View.INVISIBLE)
 						FrontIndi.setVisibility(View.VISIBLE);
 					FrontIndi.setBackgroundResource(R.drawable.red_circle);
+
+					goal.setTextColor(getResources().getColor(R.color.c_unbalance));
 					goal.setText(getResources().getString(R.string.unbalance));
 				}
 			} else if (c_pitch - pitch <= -3) {
-				if (c_pitch - pitch >= -5) {
+				if (c_pitch - pitch >= -4) {
 					if (getPositionNum() == BNUM) {
 						BackIndi.setBackgroundResource(R.drawable.green_circle);
+
+						goal.setTextColor(getResources().getColor(R.color.white_pure));
 						goal.setText(getResources().getString(R.string.goal));
-						isHanderRunning = true;
-						runable = new Runnable() {
-							@Override
-							public void run() {
-								Log.d(TAG, "num = " + getPositionNum());
-								//Do something after 100ms
-								getNewNum(1);
-								changeIndicator();
-								isHanderRunning = false;
-							}
-						};
-						handler.postDelayed(runable, delayMillis);
+
+						if (!isHanderRunning) {
+							isHanderRunning = true;
+							stayStill();
+						}
 					}
 
 				} else {
 					if (getPositionNum() == BNUM) {
-						handler.removeCallbacksAndMessages(null);
+						handler.cancel();
 						isHanderRunning = false;
+						progressBar.setProgress(0);
 					}
 					if (BackIndi.getVisibility() == View.INVISIBLE)
 						BackIndi.setVisibility(View.VISIBLE);
 					BackIndi.setBackgroundResource(R.drawable.red_circle);
+
+					goal.setTextColor(getResources().getColor(R.color.c_unbalance));
 					goal.setText(getResources().getString(R.string.unbalance));
 				}
 			} else {
 
-				handler.removeCallbacksAndMessages(null);
+				handler.cancel();
 				isHanderRunning = false;
+				progressBar.setProgress(0);
 
 				changeIndicator();
 				FrontIndi.setBackgroundResource(R.drawable.white_circle);
 				BackIndi.setBackgroundResource(R.drawable.white_circle);
+
+				goal.setTextColor(getResources().getColor(R.color.c_balance));
 				goal.setText(getResources().getString(R.string.balance));
 			}
 		}
 		if ((getPositionNum() == LNUM) || (getPositionNum() == RNUM)) {
 			if (c_roll - roll >= 7) {
-				if (c_roll - roll <= 9) {
+				if (c_roll - roll <= 8) {
 					if (getPositionNum() == RNUM) {
 						RightIndi.setBackgroundResource(R.drawable.green_circle);
-						goal.setText(getResources().getString(R.string.goal));
 
-						isHanderRunning = true;
-						runable = new Runnable() {
-							@Override
-							public void run() {
-								//Do something after 100ms
-								Log.d(TAG, "num = " + getPositionNum());
-								getNewNum(1);
-								changeIndicator();
-								isHanderRunning = false;
-							}
-						};
-						handler.postDelayed(runable, delayMillis);
+						goal.setTextColor(getResources().getColor(R.color.white_pure));
+						goal.setText(getResources().getString(R.string.goal));
+						if (!isHanderRunning) {
+							isHanderRunning = true;
+							stayStill();
+						}
 					}
 				} else {
 					if (getPositionNum() == RNUM) {
-						handler.removeCallbacksAndMessages(null);
+						handler.cancel();
 						isHanderRunning = false;
+						progressBar.setProgress(0);
 					}
 					if (RightIndi.getVisibility() == View.INVISIBLE)
 						RightIndi.setVisibility(View.VISIBLE);
+
 					RightIndi.setBackgroundResource(R.drawable.red_circle);
+
+					goal.setTextColor(getResources().getColor(R.color.c_unbalance));
 					goal.setText(getResources().getString(R.string.unbalance));
 				}
 			} else if (c_roll - roll <= -7) {
-				if (c_roll - roll >= -9) {
+				if (c_roll - roll >= -8) {
 					if (getPositionNum() == LNUM) {
 						LeftIndi.setBackgroundResource(R.drawable.green_circle);
-						goal.setText(getResources().getString(R.string.goal));
 
-						isHanderRunning = true;
-						runable = new Runnable() {
-							@Override
-							public void run() {
-								//Do something after 100ms
-								Log.d(TAG, "num = " + getPositionNum());
-								getNewNum(1);
-								changeIndicator();
-								isHanderRunning = false;
-							}
-						};
-						handler.postDelayed(runable, delayMillis);
+						goal.setTextColor(getResources().getColor(R.color.white_pure));
+						goal.setText(getResources().getString(R.string.goal));
+						if (!isHanderRunning) {
+							isHanderRunning = true;
+							stayStill();
+						}
 					}
 				} else {
 					if (getPositionNum() == LNUM) {
-						handler.removeCallbacksAndMessages(null);
+						handler.cancel();
 						isHanderRunning = false;
+						progressBar.setProgress(0);
 					}
 					if (LeftIndi.getVisibility() == View.INVISIBLE)
 						LeftIndi.setVisibility(View.VISIBLE);
 					LeftIndi.setBackgroundResource(R.drawable.red_circle);
+
+					goal.setTextColor(getResources().getColor(R.color.c_unbalance));
 					goal.setText(getResources().getString(R.string.unbalance));
 				}
 			} else {
-				handler.removeCallbacksAndMessages(null);
+
+				handler.cancel();
 				isHanderRunning = false;
+				progressBar.setProgress(0);
+
 
 				changeIndicator();
 				LeftIndi.setBackgroundResource(R.drawable.white_circle);
 				RightIndi.setBackgroundResource(R.drawable.white_circle);
-//			if (goal.getText().equals(getResources().getString(R.string.balance)))
+
+				goal.setTextColor(getResources().getColor(R.color.c_balance));
 				goal.setText(getResources().getString(R.string.balance));
 			}
+		}
+	}
+
+	private void stayStill() {
+		if (isHanderRunning) {
+
+			handler = new CountDownTimer(delayMillis, 10) {
+
+				public void onTick(long millisUntilFinished) {
+//				mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+//					Log.d(TAG, "seconds remaining: " + millisUntilFinished / 100);
+//					isHanderRunning = true;
+					progressBar.setProgress(delayMillis - millisUntilFinished);
+				}
+
+				public void onFinish() {
+//			mTextField.setText("done!");
+//					Log.d(TAG, "num = " + getPositionNum());
+					countgoal++;
+					count_tv.setText("Count:" + countgoal);
+					getNewNum();
+					progressBar.setProgress(0);
+					changeIndicator();
+					isHanderRunning = false;
+				}
+			}.start();
 		}
 	}
 
@@ -380,15 +367,15 @@ public class MainActivity extends Activity implements SensorEventListener {
 		senSensorManager.registerListener(this, senMagnetic, SensorManager.SENSOR_DELAY_NORMAL);
 	}
 
-	private void getNewNum(int mode) {
-		if (mode == 1) {
-			positionNum = ((positionNum + 1) % 4);
+	private void getNewNum() {
+		if (insctuctionSet.length != 1) {
+			positionNum = insctuctionSet[countgoal % insctuctionSet.length];
 		}
 		changeIndicator();
 	}
 
 	private void changeIndicator() {
-		handler.removeCallbacksAndMessages(null);
+		handler.cancel();
 		switch (positionNum) {
 			case FNUM:
 				if (LRlayout.getVisibility() == View.VISIBLE)
