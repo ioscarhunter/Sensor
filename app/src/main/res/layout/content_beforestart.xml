@@ -40,7 +40,8 @@
                 android:paddingBottom="@dimen/card_padding"
                 android:paddingLeft="@dimen/card_padding"
                 android:paddingRight="@dimen/card_padding"
-                android:paddingTop="@dimen/card_padding">
+                android:paddingTop="@dimen/card_padding"
+                android:background="@color/clear">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -89,7 +90,8 @@
                 android:paddingBottom="@dimen/card_padding"
                 android:paddingLeft="@dimen/card_padding"
                 android:paddingRight="@dimen/card_padding"
-                android:paddingTop="@dimen/card_padding">
+                android:paddingTop="@dimen/card_padding"
+                android:background="@color/clear">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -138,7 +140,8 @@
                 android:paddingBottom="@dimen/card_padding"
                 android:paddingLeft="@dimen/card_padding"
                 android:paddingRight="@dimen/card_padding"
-                android:paddingTop="@dimen/card_padding">
+                android:paddingTop="@dimen/card_padding"
+                android:background="@color/clear">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -187,7 +190,8 @@
                 android:paddingLeft="@dimen/card_padding"
                 android:paddingRight="@dimen/card_padding"
                 android:paddingTop="@dimen/card_padding"
-                android:id="@+id/card4">
+                android:id="@+id/card4"
+                android:background="@color/clear">
 
                 <RelativeLayout
                     android:layout_width="match_parent"

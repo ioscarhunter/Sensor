@@ -70,7 +70,6 @@
     <color name="purple_700">#7B1FA2</color>
     <color name="purple_900">#4A148C</color>
 
-
     <color name="Deep_Purple_300">#9575CD</color>
     <color name="Deep_Purple_500">#673AB7</color>
     <color name="Deep_Purple_700">#512DA8</color>
@@ -86,8 +85,22 @@
     <color name="blue_700">#1976D2</color>
     <color name="blue_900">#0D47A1</color>
 
+    <color name="blue_A400">#2979FF</color>
+    <color name="blue_A700">#2962FF</color>
+
     <color name="green_300">#81C784</color>
     <color name="green_500">#4CAF50</color>
     <color name="green_700">#388E3C</color>
     <color name="green_900">#1B5E20</color>
+
+    <color name="green_A400">#00E676</color>
+
+    <color name="orange_300">#FFB74D</color>
+    <color name="orange_500">#FF9800</color>
+    <color name="orange_700">#F57C00</color>
+    <color name="orange_900">#E65100</color>
+
+    <color name="orange_A700">#FF6D00</color>
+    <color name="orange_A400">#FF9100</color>
+
 </resources>

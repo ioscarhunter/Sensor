@@ -157,7 +157,8 @@ public class detailsetting extends Fragment {
 			case 2:
 				twowaysSetting.setVisibility(View.GONE);
 				levelselector.setVisibility(View.GONE);
-
+				instruct = new int[]{0};
+				setOne(0);
 				break;
 			case 3:
 				onewaySetting.setVisibility(View.GONE);
@@ -172,19 +173,19 @@ public class detailsetting extends Fragment {
 	private void setTwo(int i) {
 		if (i == 0) {
 			instruct = new int[]{0, 1};
-			set_LR.setBackgroundColor(getResources().getColor(R.color.white_pure));
-			set_LR.setTextColor(getResources().getColor(R.color.black));
+//			set_LR.setBackgroundColor(getResources().getColor(R.color.white_pure));
+			set_LR.setTextColor(getResources().getColor(R.color.black_alpha));
 
-			set_UD.setTextColor(getResources().getColor(R.color.white_pure));
-			set_UD.setBackgroundResource(R.drawable.circle_l5);
+			set_UD.setTextColor(getResources().getColor(R.color.green_A400));
+//			set_UD.setBackgroundResource(R.drawable.circle_l5);
 			updateSet();
 		} else if (i == 1) {
 			instruct = new int[]{2, 3};
-			set_UD.setBackgroundColor(getResources().getColor(R.color.white_pure));
-			set_UD.setTextColor(getResources().getColor(R.color.black));
+//			set_UD.setBackgroundColor(getResources().getColor(R.color.white_pure));
+			set_UD.setTextColor(getResources().getColor(R.color.black_alpha));
 
-			set_LR.setTextColor(getResources().getColor(R.color.white_pure));
-			set_LR.setBackgroundColor(getResources().getColor(R.color.green_700));
+			set_LR.setTextColor(getResources().getColor(R.color.green_A400));
+//			set_LR.setBackgroundResource(R.drawable.circle_l5);
 			updateSet();
 		}
 
@@ -194,19 +195,20 @@ public class detailsetting extends Fragment {
 		clearOne(instruct[0]);
 		switch (i) {
 			case 0:
-				set_U.setTextColor(getResources().getColor(R.color.white_pure));
-				set_U.setBackgroundResource(R.drawable.circle_l5);
+				set_U.setTextColor(getResources().getColor(R.color.green_A400));
+//				set_U.setBackgroundResource(R.drawable.circle_l5);
+				break;
 			case 1:
-				set_D.setTextColor(getResources().getColor(R.color.white_pure));
-				set_D.setBackgroundColor(getResources().getColor(R.color.green_700));
+				set_D.setTextColor(getResources().getColor(R.color.green_A400));
+//				set_D.setBackgroundResource(R.drawable.circle_l5);
 				break;
 			case 2:
-				set_L.setTextColor(getResources().getColor(R.color.white_pure));
-				set_L.setBackgroundColor(getResources().getColor(R.color.green_700));
+				set_L.setTextColor(getResources().getColor(R.color.green_A400));
+//				set_L.setBackgroundResource(R.drawable.circle_l5);
 				break;
 			case 3:
-				set_R.setTextColor(getResources().getColor(R.color.white_pure));
-				set_R.setBackgroundColor(getResources().getColor(R.color.green_700));
+				set_R.setTextColor(getResources().getColor(R.color.green_A400));
+//				set_R.setBackgroundResource(R.drawable.circle_l5);
 				break;
 		}
 		instruct[0] = i;
@@ -216,20 +218,20 @@ public class detailsetting extends Fragment {
 	private void clearOne(int i) {
 		switch (i) {
 			case 0:
-				set_U.setTextColor(getResources().getColor(R.color.black));
-				set_U.setBackgroundColor(getResources().getColor(R.color.white_pure));
+				set_U.setTextColor(getResources().getColor(R.color.black_alpha));
+//				set_U.setBackgroundColor(getResources().getColor(R.color.white_pure));
 				break;
 			case 1:
-				set_D.setTextColor(getResources().getColor(R.color.black));
-				set_D.setBackgroundColor(getResources().getColor(R.color.white_pure));
+				set_D.setTextColor(getResources().getColor(R.color.black_alpha));
+//				set_D.setBackgroundColor(getResources().getColor(R.color.white_pure));
 				break;
 			case 2:
-				set_L.setTextColor(getResources().getColor(R.color.black));
-				set_L.setBackgroundColor(getResources().getColor(R.color.white_pure));
+				set_L.setTextColor(getResources().getColor(R.color.black_alpha));
+//				set_L.setBackgroundColor(getResources().getColor(R.color.white_pure));
 				break;
 			case 3:
-				set_R.setTextColor(getResources().getColor(R.color.black));
-				set_R.setBackgroundColor(getResources().getColor(R.color.white_pure));
+				set_R.setTextColor(getResources().getColor(R.color.black_alpha));
+//				set_R.setBackgroundColor(getResources().getColor(R.color.white_pure));
 				break;
 		}
 	}
