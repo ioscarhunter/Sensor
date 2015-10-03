@@ -140,7 +140,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 //		senSensorManager.registerListener(this, senMagnetic, SensorManager.SENSOR_DELAY_NORMAL);
 
 		countgoal = 0;
-		insctuctionSet = new int[]{0, 1};
+		insctuctionSet = new int[]{0, 1, 2, 3};
 
 	}
 
@@ -151,7 +151,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 			accels = Calculate.lowPass(sensorEvent.values.clone(), accels);
 
 		if (/*mags == null &&*/ accels != null) {
-			pitch = Math.atan2(accels[1], accels[2]) * 180 / Math.PI;
+			pitch = Math.atan2(-accels[1], accels[2]) * 180 / Math.PI;
 			roll = Math.atan2(-accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
 			updateScreen();
 		}

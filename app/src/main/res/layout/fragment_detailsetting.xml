@@ -19,65 +19,79 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/twoways"
-            >
+            android:gravity="center_vertical|center"
+            android:elevation="2dp"
+            android:layout_marginTop="2dp">
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="U/D"
+                android:text="@string/updown"
                 android:id="@+id/updown"
+                style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+                android:textSize="@dimen/titleSize"
                 android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/leftright"
-                android:layout_toEndOf="@+id/leftright"/>
+                android:layout_toLeftOf="@+id/leftright"
+                android:layout_toStartOf="@+id/leftright"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="L/R"
+                android:text="@string/leftright"
                 android:id="@+id/leftright"
+                style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+                android:textSize="@dimen/titleSize"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
+                android:layout_centerHorizontal="true"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/oneway"
-            >
+            android:gravity="center_vertical|center"
+            android:elevation="2dp"
+            android:layout_marginTop="2dp">
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Up"
-                android:id="@+id/up"/>
+                android:text="@string/up_but"
+                android:id="@+id/up"
+                style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+                android:textSize="@dimen/titleSize"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="down"
+                android:text="@string/down_but"
                 android:id="@+id/down"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/up"
-                android:layout_toEndOf="@+id/up"/>
+                android:layout_toEndOf="@+id/up"
+                style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+                android:textSize="@dimen/titleSize"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="left"
+                android:text="@string/left_but"
                 android:id="@+id/left"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/down"
-                android:layout_toEndOf="@+id/down"/>
+                android:layout_toEndOf="@+id/down"
+                style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+                android:textSize="@dimen/titleSize"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="right"
+                android:text="@string/right_but"
                 android:id="@+id/right"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/left"
-                android:layout_toEndOf="@+id/left"/>
+                style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+                android:textSize="@dimen/titleSize"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -85,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="74dp"
             android:layout_above="@+id/countdown"
-            android:elevation="1dp"
+            android:elevation="2dp"
             android:orientation="horizontal"
             android:visibility="visible"
             android:paddingLeft="5dp"

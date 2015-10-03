@@ -69,4 +69,10 @@
     <string name="minus_but">-</string>
     <string name="name">Name</string>
     <string name="title_activity_name_list">NameList</string>
+    <string name="updown">Up/Down</string>
+    <string name="leftright">Left/Right</string>
+    <string name="up_but">UP</string>
+    <string name="down_but">Down</string>
+    <string name="left_but">Left</string>
+    <string name="right_but">Right</string>
 </resources>

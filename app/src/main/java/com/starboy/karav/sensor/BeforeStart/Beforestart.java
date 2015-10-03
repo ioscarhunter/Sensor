@@ -37,6 +37,7 @@ public class Beforestart extends AppCompatActivity {
 	private Button tog3;
 	private Button tog4;
 
+	private setting[] set;
 	private boolean cardon[];
 
 	private int[] descriptionViewFullHeight;
@@ -56,6 +57,8 @@ public class Beforestart extends AppCompatActivity {
 		framelayout = new FrameLayout[NUMCARD];
 
 		descriptionViewFullHeight = new int[NUMCARD];
+		set = new setting[NUMCARD];
+
 //		descriptionViewFullHeight = getResources().getDimensionPixelSize(R.dimen.max_cardexpand);
 
 		card[0] = (CardView) findViewById(R.id.card1);
@@ -79,6 +82,7 @@ public class Beforestart extends AppCompatActivity {
 			final CardView cv = card[i];
 			final Button togi = tog[i];
 			final int fi = i;
+			set[fi] = new setting();
 			framelayout[fi] = (FrameLayout) findViewById(frame[fi]);
 			getFragmentManager().beginTransaction().add(frame[fi], detailsetting.newInstance(i)).commit();
 			cv.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -114,17 +118,17 @@ public class Beforestart extends AppCompatActivity {
 //				Snackbar.make(fab, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 						break;
 					case 1:
-						Snackbar.make(fab, "ยังไม่ได้ทำ :D", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+						Snackbar.make(fab, "ยังไม่ได้ทำ :D", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
 						break;
 					case 2:
-						Snackbar.make(fab, "ยังไม่ได้ทำ :D", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+						Snackbar.make(fab, "ยังไม่ได้ทำ :D", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
 						break;
 					case 3:
-						Snackbar.make(fab, "ยังไม่ได้ทำ :D", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+						Snackbar.make(fab, "ยังไม่ได้ทำ :D", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
 						break;
 
 					case -1:
-						Snackbar.make(fab, ":D", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+						Snackbar.make(fab, ":D", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
 						break;
 					default:
 						break;
@@ -196,6 +200,21 @@ public class Beforestart extends AppCompatActivity {
 			if (cardon[i]) return i;
 		}
 		return -1;
+	}
+
+	public void updateSetting(int num, int[] instint, int level, long time_s, long time_t) {
+		set[num].level = level;
+		set[num].instruction = instint;
+		set[num].time_still = time_s;
+		set[num].time_total = time_t;
+
+	}
+
+	public class setting {
+		int[] instruction;
+		int level;
+		long time_still;
+		long time_total;
 	}
 }
 
