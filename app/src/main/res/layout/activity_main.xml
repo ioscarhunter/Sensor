@@ -4,17 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:android.support.design="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     tools:context="com.starboy.karav.sensor.Meter.MainActivity">
 
     <include layout="@layout/content_meter"/>
 
     <android.support.design.widget.FloatingActionButton
+
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_done"
-        />
+        android:src="@drawable/ic_play"
+        android:theme="@style/AppTheme"
+        android.support.design:fabSize="mini"
+        android.support.design:backgroundTint="@color/indigo_500">
+
+    </android.support.design.widget.FloatingActionButton>
+
 </android.support.design.widget.CoordinatorLayout>

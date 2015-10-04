@@ -1,7 +1,7 @@
 package com.starboy.karav.sensor.Meter;
 
 public class Calculate {
-	static float ALPHA = 0.5f;
+	static float ALPHA = 0.05f;
 
 	static int Partition(double[] a, int p, int r) {
 		double x = a[r];

@@ -11,6 +11,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -34,4 +35,5 @@ dependencies {
     compile 'com.h6ah4i.android.widget.verticalseekbar:verticalseekbar:0.5.2'
     compile 'com.android.support:design:23.0.1'
     compile 'com.akexorcist:RoundCornerProgressBar:2.0.3'
+    compile 'com.android.support:multidex:1.0.1'
 }
