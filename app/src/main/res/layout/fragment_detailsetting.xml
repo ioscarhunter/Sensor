@@ -232,7 +232,8 @@
             android:layout_height="wrap_content"
             android:text="Still Time"
             android:id="@+id/stilltime_tv"
-            android:paddingTop="@dimen/card_margin"/>
+            android:paddingTop="@dimen/card_margin"
+            android:paddingLeft="@dimen/card_padding"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -307,7 +308,8 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Total Time"
             android:id="@+id/totaltime_tv"
-            android:paddingTop="@dimen/card_margin"/>
+            android:paddingTop="@dimen/card_margin"
+            android:paddingLeft="@dimen/card_padding"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -19,6 +19,8 @@ import android.widget.FrameLayout;
 import com.starboy.karav.sensor.Meter.MainActivity;
 import com.starboy.karav.sensor.R;
 
+import java.util.Arrays;
+
 public class Beforestart extends AppCompatActivity {
 	private final int NUMCARD = 4;
 	final String TAG = "Befores";
@@ -112,13 +114,19 @@ public class Beforestart extends AppCompatActivity {
 			public void onClick(View view) {
 				switch (getCurrentOpen()) {
 					case 0:
-						Intent myIntent = new Intent(Beforestart.this, MainActivity.class);
-//				myIntent.putExtra("key", value); //Optional parameters
-						Beforestart.this.startActivity(myIntent);
+						Intent myIntent1 = new Intent(Beforestart.this, MainActivity.class);
+						myIntent1.putExtra("still", set[0].time_still);
+						myIntent1.putExtra("total", set[0].time_total);
+						myIntent1.putExtra("inst", set[0].instruction);
+						Beforestart.this.startActivity(myIntent1);
 //				Snackbar.make(fab, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 						break;
 					case 1:
-						Snackbar.make(fab, "ยังไม่ได้ทำ :D", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+						Intent myIntent2 = new Intent(Beforestart.this, MainActivity.class);
+						myIntent2.putExtra("still", set[1].time_still);
+						myIntent2.putExtra("total", set[1].time_total);
+						myIntent2.putExtra("inst", set[1].instruction);
+						Beforestart.this.startActivity(myIntent2);
 						break;
 					case 2:
 						Snackbar.make(fab, "ยังไม่ได้ทำ :D", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
@@ -203,6 +211,7 @@ public class Beforestart extends AppCompatActivity {
 	}
 
 	public void updateSetting(int num, int[] instint, int level, long time_s, long time_t) {
+		Log.d(TAG, num + ":" + Arrays.toString(instint));
 		set[num].level = level;
 		set[num].instruction = instint;
 		set[num].time_still = time_s;

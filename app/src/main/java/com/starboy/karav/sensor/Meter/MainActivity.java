@@ -7,9 +7,11 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 	private final int BNUM = 1;
 	private final int LNUM = 2;
 	private final int RNUM = 3;
+
 
 	private SensorManager senSensorManager;
 	private Sensor senAccelerometer;
@@ -45,29 +48,13 @@ public class MainActivity extends Activity implements SensorEventListener {
 	private TextView goal;
 	private TextView count_tv;
 
+	private Button stop_but;
+
+	private RelativeLayout goalLayout;
 	private RelativeLayout FBlayout;
 	private RelativeLayout LRlayout;
 
-	private boolean flag;
-
-	private double[] pitchArr;
-	private double[] rollArr;
-
-	float Rot[] = null; //for gravity rotational data
-	//don't use R because android uses that for other stuff
-	float I[] = null; //for magnetic rotational data
-	float accels[] /*= new float[3]*/;
-	float mags[] = new float[3];
-	float[] values = new float[3];
-
-	double pitch;
-	double roll;
-
-	double temp_pitch;
-	double temp_roll;
-
-	double c_pitch = 0;
-	double c_roll = 0;
+	private Chronometer timer_total;
 
 	private int countgoal;
 	private int[] insctuctionSet;
@@ -78,12 +65,29 @@ public class MainActivity extends Activity implements SensorEventListener {
 	private CountDownTimer handler;
 	private boolean isHanderRunning;
 	private Runnable runable;
-	private int delayMillis = 3000;
+	private long time_still = 3000;
+	private long time_total = 3 * 1000 * 60;
+
+	float accels[];
+
+	double pitch;
+	double roll;
+
+	double c_pitch = 0;
+	double c_roll = 0;
+	private boolean timeOn;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		Bundle b = this.getIntent().getExtras();
+
+		insctuctionSet = b.getIntArray("inst");
+		time_still = b.getLong("still");
+		time_total = b.getLong("total");
+
 		tv = (TextView) findViewById(R.id.textView);
 		pit = (TextView) findViewById(R.id.pitch);
 		rol = (TextView) findViewById(R.id.roll);
@@ -102,10 +106,23 @@ public class MainActivity extends Activity implements SensorEventListener {
 
 		progressBar = (RoundCornerProgressBar) findViewById(R.id.timeProgressBar);
 
-		isHanderRunning = false;
-		positionNum = 0;
+		timer_total = (Chronometer) findViewById(R.id.timer_total);
+		timer_total.setBase(SystemClock.elapsedRealtime() - time_total);
 
-		progressBar.setMax(delayMillis);
+		goalLayout = (RelativeLayout) findViewById(R.id.goalLayout);
+		goalLayout.setBackgroundColor(getResources().getColor(R.color.green_500));
+
+		stop_but = (Button) findViewById(R.id.stop_but);
+		isHanderRunning = false;
+//		positionNum = 0;
+
+		timeOn = false;
+
+		countgoal = 0;
+//		insctuctionSet = new int[]{0, 1, 2, 3};
+
+		progressBar.setMax(time_still);
+
 		handler = new CountDownTimer(1, 1) {
 			@Override
 			public void onTick(long l) {
@@ -128,19 +145,14 @@ public class MainActivity extends Activity implements SensorEventListener {
 		xbar = (SeekBar) findViewById(R.id.xbar);
 		ybar = (SeekBar) findViewById(R.id.ybar);
 
-		pitchArr = new double[4];
-		rollArr = new double[4];
-//	    if (ybar != null) {
+		count_tv.setText("Count:" + countgoal);
 
-		flag = false;
 		senSensorManager = (SensorManager) this.getSystemService((SENSOR_SERVICE));
 		senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 //		senMagnetic = senSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 		senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_GAME);
 //		senSensorManager.registerListener(this, senMagnetic, SensorManager.SENSOR_DELAY_NORMAL);
 
-		countgoal = 0;
-		insctuctionSet = new int[]{0, 1, 2, 3};
 
 	}
 
@@ -151,6 +163,9 @@ public class MainActivity extends Activity implements SensorEventListener {
 			accels = Calculate.lowPass(sensorEvent.values.clone(), accels);
 
 		if (/*mags == null &&*/ accels != null) {
+
+			//TODO set the orientation
+
 			pitch = Math.atan2(-accels[1], accels[2]) * 180 / Math.PI;
 			roll = Math.atan2(-accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
 			updateScreen();
@@ -182,7 +197,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 					if (getPositionNum() == FNUM) {
 						FrontIndi.setBackgroundResource(R.drawable.green_circle);
 
-						goal.setTextColor(getResources().getColor(R.color.white_pure));
+						goalLayout.setBackgroundColor(getResources().getColor(R.color.white_pure));
 						goal.setText(getResources().getString(R.string.goal));
 
 						if (!isHanderRunning) {
@@ -199,7 +214,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 						FrontIndi.setVisibility(View.VISIBLE);
 					FrontIndi.setBackgroundResource(R.drawable.red_circle);
 
-					goal.setTextColor(getResources().getColor(R.color.c_unbalance));
+					goalLayout.setBackgroundColor(getResources().getColor(R.color.red_A400));
 					goal.setText(getResources().getString(R.string.unbalance));
 				}
 			} else if (c_pitch - pitch <= -3) {
@@ -207,7 +222,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 					if (getPositionNum() == BNUM) {
 						BackIndi.setBackgroundResource(R.drawable.green_circle);
 
-						goal.setTextColor(getResources().getColor(R.color.white_pure));
+						goalLayout.setBackgroundColor(getResources().getColor(R.color.white_pure));
 						goal.setText(getResources().getString(R.string.goal));
 
 						if (!isHanderRunning) {
@@ -226,7 +241,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 						BackIndi.setVisibility(View.VISIBLE);
 					BackIndi.setBackgroundResource(R.drawable.red_circle);
 
-					goal.setTextColor(getResources().getColor(R.color.c_unbalance));
+					goalLayout.setBackgroundColor(getResources().getColor(R.color.red_A400));
 					goal.setText(getResources().getString(R.string.unbalance));
 				}
 			} else {
@@ -239,7 +254,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 				FrontIndi.setBackgroundResource(R.drawable.white_circle);
 				BackIndi.setBackgroundResource(R.drawable.white_circle);
 
-				goal.setTextColor(getResources().getColor(R.color.c_balance));
+				goalLayout.setBackgroundColor(getResources().getColor(R.color.blue_500));
 				goal.setText(getResources().getString(R.string.balance));
 			}
 		}
@@ -249,7 +264,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 					if (getPositionNum() == RNUM) {
 						RightIndi.setBackgroundResource(R.drawable.green_circle);
 
-						goal.setTextColor(getResources().getColor(R.color.white_pure));
+						goalLayout.setBackgroundColor(getResources().getColor(R.color.white_pure));
 						goal.setText(getResources().getString(R.string.goal));
 						if (!isHanderRunning) {
 							isHanderRunning = true;
@@ -267,7 +282,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 
 					RightIndi.setBackgroundResource(R.drawable.red_circle);
 
-					goal.setTextColor(getResources().getColor(R.color.c_unbalance));
+					goalLayout.setBackgroundColor(getResources().getColor(R.color.red_A400));
 					goal.setText(getResources().getString(R.string.unbalance));
 				}
 			} else if (c_roll - roll <= -7) {
@@ -275,7 +290,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 					if (getPositionNum() == LNUM) {
 						LeftIndi.setBackgroundResource(R.drawable.green_circle);
 
-						goal.setTextColor(getResources().getColor(R.color.white_pure));
+						goalLayout.setBackgroundColor(getResources().getColor(R.color.white_pure));
 						goal.setText(getResources().getString(R.string.goal));
 						if (!isHanderRunning) {
 							isHanderRunning = true;
@@ -292,7 +307,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 						LeftIndi.setVisibility(View.VISIBLE);
 					LeftIndi.setBackgroundResource(R.drawable.red_circle);
 
-					goal.setTextColor(getResources().getColor(R.color.c_unbalance));
+					goalLayout.setBackgroundColor(getResources().getColor(R.color.red_A400));
 					goal.setText(getResources().getString(R.string.unbalance));
 				}
 			} else {
@@ -301,27 +316,65 @@ public class MainActivity extends Activity implements SensorEventListener {
 				isHanderRunning = false;
 				progressBar.setProgress(0);
 
-
 				changeIndicator();
 				LeftIndi.setBackgroundResource(R.drawable.white_circle);
 				RightIndi.setBackgroundResource(R.drawable.white_circle);
 
-				goal.setTextColor(getResources().getColor(R.color.c_balance));
+				goalLayout.setBackgroundColor(getResources().getColor(R.color.blue_500));
 				goal.setText(getResources().getString(R.string.balance));
 			}
 		}
 	}
 
+	private void toggletime() {
+		if (timeOn) {
+//			start.setText(getResources().getString(R.string.resume));
+			timeOn = false;
+			timer_total.stop();
+//			setColourAnimation(start, R.color.clear, R.color.black, 100);//change to black
+//			timer_total.startAnimation(anim);
+
+		} else {
+//			start.setText(getResources().getString(R.string.pause));
+			timeOn = true;
+			long elapsedMillis = SystemClock.elapsedRealtime() - timer_total.getBase();
+			// Amount of time elapsed since the start button was pressed, minus the time paused
+			timer_total.setBase(elapsedMillis);
+			timer_total.start();
+//			setColourAnimation(start, R.color.black, R.color.clear, 100);
+//			timer_total.clearAnimation();
+//			if (!firstTime) {
+//				receiverActivity.sendMessage("T:" + "R");
+//			} else {
+//				receiverActivity.sendMessage("T:" + "B:" + level);
+//				firstTime = false;
+//			}
+		}
+	}
+
+
+	private void play() {
+
+	}
+
+	private void pluse() {
+
+	}
+
+	private void stop() {
+
+	}
+
 	private void stayStill() {
 		if (isHanderRunning) {
 
-			handler = new CountDownTimer(delayMillis, 10) {
+			handler = new CountDownTimer(time_still, 10) {
 
 				public void onTick(long millisUntilFinished) {
 //				mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
 //					Log.d(TAG, "seconds remaining: " + millisUntilFinished / 100);
 //					isHanderRunning = true;
-					progressBar.setProgress(delayMillis - millisUntilFinished);
+					progressBar.setProgress(time_still - millisUntilFinished);
 				}
 
 				public void onFinish() {
@@ -337,17 +390,6 @@ public class MainActivity extends Activity implements SensorEventListener {
 			}.start();
 		}
 	}
-
-
-	private void addNum(double rl, double pl) {
-		for (int i = 0; i < rollArr.length - 1; i++) {
-			rollArr[i] = rollArr[i + 1];
-			pitchArr[i] = pitchArr[i + 1];
-		}
-		rollArr[rollArr.length - 1] = rl;
-		pitchArr[pitchArr.length - 1] = pl;
-	}
-
 
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {

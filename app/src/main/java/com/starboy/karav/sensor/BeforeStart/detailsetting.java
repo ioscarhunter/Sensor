@@ -140,14 +140,15 @@ public class detailsetting extends Fragment {
 		chrono_still.setBase(SystemClock.elapsedRealtime() - time_still);
 
 		setButton();
-		setLevel(1);
-		instruct = new int[]{0, 1, 2, 3};
+
+//		instruct = new int[]{0, 1, 2, 3};
 		switch (function) {
 			case 0:
 				onewaySetting.setVisibility(View.GONE);
 				twowaysSetting.setVisibility(View.GONE);
 				levelselector.setVisibility(View.GONE);
-
+				instruct = new int[]{0, 1, 2, 3};
+				updateSet();
 				break;
 			case 1:
 				onewaySetting.setVisibility(View.GONE);
@@ -165,8 +166,10 @@ public class detailsetting extends Fragment {
 				twowaysSetting.setVisibility(View.GONE);
 				stilltimer.setVisibility(View.GONE);
 				stilltime_tv.setVisibility(View.GONE);
+				setLevel(1);
 				break;
 		}
+
 		return view;
 	}
 
@@ -319,12 +322,12 @@ public class detailsetting extends Fragment {
 			@Override
 			public void onClick(View v) {
 				if (time_total == (1 * 1000 * 60)) {
-					minus_total.setTextColor(getResources().getColor(R.color.white_pure));
+					minus_total.setTextColor(getResources().getColor(R.color.blue_A400));
 				}
 				if (time_total < (59 * 1000 * 60)) {
 					time_total += (1 * 1000 * 60);
 					if (time_total == (59 * 1000 * 60)) {
-						plus_total.setTextColor(getResources().getColor(R.color.blue_grey500));
+						plus_total.setTextColor(getResources().getColor(R.color.grey_500));
 					}
 					chrono_total.setBase(SystemClock.elapsedRealtime() - time_total);
 					updateSet();
@@ -336,12 +339,12 @@ public class detailsetting extends Fragment {
 			@Override
 			public void onClick(View v) {
 				if (time_total == (59 * 1000 * 60)) {
-					plus_total.setTextColor(getResources().getColor(R.color.white_pure));
+					plus_total.setTextColor(getResources().getColor(R.color.orange_A700));
 				}
 				if (time_total > (1 * 1000 * 60)) {
 					time_total -= 1 * 1000 * 60;
 					if (time_total == (1 * 1000 * 60)) {
-						minus_total.setTextColor(getResources().getColor(R.color.blue_grey500));
+						minus_total.setTextColor(getResources().getColor(R.color.grey_500));
 					}
 					chrono_total.setBase(SystemClock.elapsedRealtime() - time_total);
 					updateSet();
@@ -353,12 +356,12 @@ public class detailsetting extends Fragment {
 			@Override
 			public void onClick(View v) {
 				if (time_still == (1 * 1000)) {
-					minus_still.setTextColor(getResources().getColor(R.color.white_pure));
+					minus_still.setTextColor(getResources().getColor(R.color.blue_A400));
 				}
 				if (time_still < (59 * 1000)) {
 					time_still += 1 * 1000;
 					if (time_still == (59 * 1000)) {
-						plus_still.setTextColor(getResources().getColor(R.color.blue_grey500));
+						plus_still.setTextColor(getResources().getColor(R.color.grey_500));
 					}
 					chrono_still.setBase(SystemClock.elapsedRealtime() - time_still);
 					updateSet();
@@ -370,12 +373,12 @@ public class detailsetting extends Fragment {
 			@Override
 			public void onClick(View v) {
 				if (time_still == (59 * 1000)) {
-					plus_still.setTextColor(getResources().getColor(R.color.white_pure));
+					plus_still.setTextColor(getResources().getColor(R.color.orange_A700));
 				}
 				if (time_still > (1 * 1000)) {
 					time_still -= 1 * 1000;
 					if (time_still == (1 * 1000)) {
-						minus_still.setTextColor(getResources().getColor(R.color.blue_grey500));
+						minus_still.setTextColor(getResources().getColor(R.color.grey_500));
 					}
 					chrono_still.setBase(SystemClock.elapsedRealtime() - time_still);
 					updateSet();
@@ -391,7 +394,7 @@ public class detailsetting extends Fragment {
 	private void setLevel(int level) {
 		resetColour();
 		this.level = level;
-
+		updateSet();
 		switch (level) {
 			case 1:
 				level1.setBackgroundResource(R.drawable.circle_l1);
