@@ -2,4 +2,5 @@
 <resources>
     <dimen name="goal_size">80sp</dimen>
     <dimen name="cardwidthsize">400dp</dimen>
+    <dimen name="max_cardexpand">320dp</dimen>
 </resources>

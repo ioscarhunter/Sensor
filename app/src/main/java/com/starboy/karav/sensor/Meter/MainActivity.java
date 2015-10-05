@@ -87,6 +87,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 	double c_pitch = 0;
 	double c_roll = 0;
 	private boolean timeOn;
+	private int rotation;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +179,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 //		senMagnetic = senSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 		senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_GAME);
 //		senSensorManager.registerListener(this, senMagnetic, SensorManager.SENSOR_DELAY_NORMAL);
+		rotation = getWindowManager().getDefaultDisplay().getRotation();
 
 	}
 
@@ -214,7 +216,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 
 		if (accels != null) {
 
-			final int rotation = getWindowManager().getDefaultDisplay().getRotation();
+
 			switch (rotation) {
 				case Surface.ROTATION_0:
 					pitch = Math.atan2(-accels[1], accels[2]) * 180 / Math.PI;
@@ -244,8 +246,8 @@ public class MainActivity extends Activity implements SensorEventListener {
 
 		ybar.setProgress(Calculate.getPercent(8, -4, c_pitch - pitch));
 		xbar.setProgress(Calculate.getPercent(8, -8, c_roll - roll));
-		pit.setText(Math.round((c_pitch - pitch) * 100) / 100.0 + "°");
-		rol.setText(Math.round((c_roll - roll) * 100) / 100.0 + "°");
+		pit.setText(Math.round((c_pitch - pitch) * 10) / 10.0 + "°");
+		rol.setText(Math.round((c_roll - roll) * 10) / 10.0 + "°");
 
 		setButtonColour();
 	}
