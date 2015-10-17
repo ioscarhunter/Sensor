@@ -75,4 +75,5 @@
     <string name="down_but">Down</string>
     <string name="left_but">Left</string>
     <string name="right_but">Right</string>
+    <string name="average">Average</string>
 </resources>

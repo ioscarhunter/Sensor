@@ -2,5 +2,6 @@
 <resources>
     <dimen name="cardwidthsize">300dp</dimen>
     <dimen name="goal_size">40sp</dimen>
-    <dimen name="chronoSize">35sp</dimen>
+    <dimen name="chronoSize">40sp</dimen>
+    <dimen name="average_size">40dp</dimen>
 </resources>

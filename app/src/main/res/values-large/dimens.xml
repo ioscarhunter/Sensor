@@ -2,4 +2,5 @@
 <resources>
     <dimen name="cardwidthsize">380dp</dimen>
     <dimen name="max_cardexpand">300dp</dimen>
+    <dimen name="average_size">50dp</dimen>
 </resources>
