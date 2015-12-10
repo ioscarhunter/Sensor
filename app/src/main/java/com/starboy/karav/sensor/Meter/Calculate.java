@@ -1,7 +1,7 @@
 package com.starboy.karav.sensor.Meter;
 
 public class Calculate {
-	static float ALPHA = 0.05f;
+	private static final float ALPHA = 0.05f;
 
 	static int Partition(double[] a, int p, int r) {
 		double x = a[r];
@@ -46,7 +46,7 @@ public class Calculate {
 		}
 	}
 
-	static int getPercent(int up, int down, double number) {
+	static int getPercent(double up, double down, double number) {
 		if (number >= up) return 100;
 		else if (number <= down) return 0;
 		else {

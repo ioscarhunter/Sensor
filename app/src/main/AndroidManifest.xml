@@ -17,7 +17,7 @@
             android:theme="@style/DarkTheme">
         </activity>
         <activity
-            android:name=".BeforeStart.Beforestart"
+            android:name=".BeforeStart.BeforeStart"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
