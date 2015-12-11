@@ -408,7 +408,6 @@ public class DetailSetting extends Fragment {
     private void setLevel(int level) {
         resetColour();
         this.level = level;
-        updateSet();
         switch (level) {
             case 1:
                 level1.setBackgroundResource(R.drawable.circle_l1);
@@ -417,6 +416,7 @@ public class DetailSetting extends Fragment {
 //				currentColour = R.color.c_l1;
 //                status_level.setBackgroundColor(getResources().getColor(R.color.c_l1));
 //				setColourAnimation(level1, R.color.clear, R.color.c_l1d, buttonAnimDuration);
+                difficult = 0;
                 break;
             case 2:
                 level2.setBackgroundResource(R.drawable.circle_l2);
@@ -424,6 +424,7 @@ public class DetailSetting extends Fragment {
 //				setColourAnimation(levelSelector, currentColour, R.color.c_l2, bgnAnimDuration);
 //				currentColour = R.color.c_l2;
 //				setColourAnimation(level2, R.color.clear, R.color.c_l2d, buttonAnimDuration);
+                difficult = 1;
                 break;
             case 3:
                 level3.setBackgroundResource(R.drawable.circle_l3);
@@ -431,6 +432,7 @@ public class DetailSetting extends Fragment {
 //				setColourAnimation(levelSelector, currentColour, R.color.c_l3, bgnAnimDuration);
 //				currentColour = R.color.c_l3;
 //				setColourAnimation(level3, R.color.clear, R.color.c_l3d, buttonAnimDuration);
+                difficult = 2;
                 break;
             case 4:
                 level4.setBackgroundResource(R.drawable.circle_l4);
@@ -438,6 +440,7 @@ public class DetailSetting extends Fragment {
 //				setColourAnimation(levelSelector, currentColour, R.color.c_l4, bgnAnimDuration);
 //				currentColour = R.color.c_l4;
 //				setColourAnimation(level4, R.color.clear, R.color.c_l4d, buttonAnimDuration);
+                difficult = 2.5;
                 break;
             case 5:
                 level5.setBackgroundResource(R.drawable.circle_l5);
@@ -445,10 +448,15 @@ public class DetailSetting extends Fragment {
 //				setColourAnimation(levelSelector, currentColour, R.color.c_l5, bgnAnimDuration);
 //				currentColour = R.color.c_l5;
 //				setColourAnimation(level5, R.color.clear, R.color.c_l5d, buttonAnimDuration);
+                difficult = 3;
                 break;
             default:
                 break;
+
         }
+        instruct = new int[]{0, 0, 0, 0};
+        bound = new double[]{0, 0, 0, 0};
+        updateSet();
     }
 
     private void resetColour() {
@@ -485,7 +493,7 @@ public class DetailSetting extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.

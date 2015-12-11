@@ -24,10 +24,10 @@ import com.starboy.karav.sensor.R;
 import com.starboy.karav.sensor.Summary;
 
 
-public class MainActivity extends Activity implements SensorEventListener {
+public class Meter extends Activity implements SensorEventListener {
 
 
-    String TAG = "MainActivity";
+    String TAG = "Meter";
 
     private final int FNUM = 0;
     private final int BNUM = 1;
@@ -40,8 +40,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     private double leftBound;
     private double difficulty;
 
-    private SensorManager senSensorManager;
-    private Sensor senAccelerometer;
+
     private TextView tv;
     private TextView tv2;
     private Button cal;
@@ -95,7 +94,10 @@ public class MainActivity extends Activity implements SensorEventListener {
     double c_roll = 0;
     private int rotation;
 
-    public MainActivity() {
+    private SensorManager senSensorManager;
+    private Sensor senAccelerometer;
+
+    public Meter() {
 
     }
 
@@ -120,7 +122,6 @@ public class MainActivity extends Activity implements SensorEventListener {
 //		positionNum = 0;
 
         timeOn = false;
-
 
         countGoal = 0;
         angle_unbalance = new float[4];
@@ -279,9 +280,7 @@ public class MainActivity extends Activity implements SensorEventListener {
             rol.setText(Math.round((c_roll - roll) * 10) / 10.0 + "°");
 
             setButtonColour();
-
         }
-
     }
 
     private void setButtonColour() {
@@ -483,12 +482,12 @@ public class MainActivity extends Activity implements SensorEventListener {
     private void stop() {
         // stop countdown
         timer_total.stop();
-        Intent extra = new Intent(MainActivity.this, Summary.class);
+        Intent extra = new Intent(Meter.this, Summary.class);
         extra.putExtra("Time", timeStopped());
         extra.putExtra("count", countGoal);
         extra.putExtra("angle", angle_unbalance);
         extra.putExtra("u_count", unbalanceCount);
-        MainActivity.this.startActivity(extra);
+        Meter.this.startActivity(extra);
     }
 
     private void stayStill() {
@@ -507,7 +506,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 //			mTextField.setText("done!");
 //					Log.d(TAG, "num = " + getPositionNum());
                     countGoal++;
-                    count_tv.setText("Count:" + countGoal);
+                    count_tv.setText("Count:" + countGoal/instructionSet.length);
                     getNewNum();
                     progressBar.setProgress(0);
                     changeIndicator();
@@ -531,7 +530,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     @Override
     protected void onResume() {
         super.onResume();
-        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_GAME);
     }
 
     private void getNewNum() {

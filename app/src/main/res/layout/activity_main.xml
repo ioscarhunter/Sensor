@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:android.support.design="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    tools:context="com.starboy.karav.sensor.Meter.MainActivity">
+    tools:context=".Meter.Meter">
 
     <include layout="@layout/content_meter"/>
 

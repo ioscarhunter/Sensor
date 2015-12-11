@@ -15,7 +15,7 @@
     <dimen name="titleSize">16sp</dimen>
     <dimen name="max_recycler">300dp</dimen>
     <dimen name="cardwidthsize">360dp</dimen>
-    <dimen name="max_cardexpand">260dp</dimen>
+    <dimen name="max_cardexpand">290dp</dimen>
     <dimen name="min_cardexpand">50dp</dimen>
 
     <dimen name="plus_textsize">35sp</dimen>
