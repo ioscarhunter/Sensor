@@ -1,0 +1,116 @@
+<RelativeLayout android:id="@+id/fragment_discovery"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_paired_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:background="#ff275866"
+            android:paddingLeft="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="@string/title_paired_devices"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+        <ListView
+            android:id="@+id/paired_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentLeft="false"
+            android:layout_below="@+id/title_paired_devices"
+            android:layout_marginLeft="0dp"
+            android:fastScrollEnabled="true"
+            android:scrollingCache="false"
+            android:smoothScrollbar="false"
+            android:stackFromBottom="false"
+            tools:listfooter="@layout/device_name"
+            tools:listheader="@layout/device_name"
+            tools:listitem="@android:layout/simple_list_item_1" />
+
+        <TextView
+            android:id="@+id/title_new_devices"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/paired_devices"
+            android:background="#666"
+            android:paddingLeft="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="@string/title_other_devices"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+        <ListView
+            android:id="@+id/new_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentLeft="false"
+            android:layout_below="@+id/title_paired_devices"
+            android:paddingLeft="1dp"
+            android:paddingStart="1dp"
+            android:paddingEnd="1dp"
+            android:fastScrollEnabled="true"
+            android:headerDividersEnabled="true"
+            android:scrollingCache="false"
+            android:smoothScrollbar="false"
+            android:stackFromBottom="false"
+            tools:listfooter="@layout/device_name"
+            tools:listheader="@layout/device_name"
+            tools:listitem="@android:layout/simple_list_item_1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_scan"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+            android:background="#ff0d8ee8"
+            android:singleLine="false"
+            android:text="@string/button_scan"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/discoverable"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ffd5662e"
+            android:text="@string/discoverable"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</RelativeLayout>

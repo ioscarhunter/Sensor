@@ -322,19 +322,19 @@ public class staticMode extends Activity implements SensorEventListener {
             switch (rotation) {
                 case Surface.ROTATION_0:
                     pitch = Math.atan2(-accels[1], accels[2]) * 180 / Math.PI;
-                    roll = Math.atan2(-accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
+                    roll = -Math.atan2(-accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
                     break;
                 case Surface.ROTATION_90:
                     pitch = Math.atan2(-accels[0], accels[2]) * 180 / Math.PI;
-                    roll = Math.atan2(-accels[1], Math.sqrt(accels[0] * accels[0] + accels[2] * accels[2])) * 180 / Math.PI;
+                    roll = -Math.atan2(-accels[1], Math.sqrt(accels[0] * accels[0] + accels[2] * accels[2])) * 180 / Math.PI;
                     break;
                 case Surface.ROTATION_180:
                     pitch = Math.atan2(accels[1], accels[2]) * 180 / Math.PI;
-                    roll = Math.atan2(accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
+                    roll = -Math.atan2(accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
                     break;
                 default:
                     pitch = Math.atan2(accels[0], accels[2]) * 180 / Math.PI;
-                    roll = Math.atan2(accels[1], Math.sqrt(accels[0] * accels[0] + accels[2] * accels[2])) * 180 / Math.PI;
+                    roll = -Math.atan2(accels[1], Math.sqrt(accels[0] * accels[0] + accels[2] * accels[2])) * 180 / Math.PI;
                     break;
             }
             pitch += 90;

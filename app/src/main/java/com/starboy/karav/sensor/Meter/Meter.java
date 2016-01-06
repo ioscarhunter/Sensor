@@ -212,7 +212,8 @@ public class Meter extends Activity implements SensorEventListener {
         upBound = boundSet[0];
         downBound = boundSet[1];
         rightBound = boundSet[2];
-        leftBound = boundSet[3];;
+        leftBound = boundSet[3];
+        ;
     }
 
     private void setTimer() {
@@ -250,22 +251,22 @@ public class Meter extends Activity implements SensorEventListener {
             switch (rotation) {
                 case Surface.ROTATION_0:
                     pitch = Math.atan2(-accels[1], accels[2]) * 180 / Math.PI;
-                    roll = Math.atan2(-accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
+                    roll = -Math.atan2(-accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
                     break;
                 case Surface.ROTATION_90:
                     pitch = Math.atan2(-accels[0], accels[2]) * 180 / Math.PI;
-                    roll = Math.atan2(-accels[1], Math.sqrt(accels[0] * accels[0] + accels[2] * accels[2])) * 180 / Math.PI;
+                    roll = -Math.atan2(-accels[1], Math.sqrt(accels[0] * accels[0] + accels[2] * accels[2])) * 180 / Math.PI;
                     break;
                 case Surface.ROTATION_180:
                     pitch = Math.atan2(accels[1], accels[2]) * 180 / Math.PI;
-                    roll = Math.atan2(accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
+                    roll = -Math.atan2(accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
                     break;
                 default:
                     pitch = Math.atan2(accels[0], accels[2]) * 180 / Math.PI;
-                    roll = Math.atan2(accels[1], Math.sqrt(accels[0] * accels[0] + accels[2] * accels[2])) * 180 / Math.PI;
+                    roll = -Math.atan2(accels[1], Math.sqrt(accels[0] * accels[0] + accels[2] * accels[2])) * 180 / Math.PI;
                     break;
             }
-            pitch+=90;
+            pitch += 90;
 //			pitch = Math.atan2(-accels[1], accels[2]) * 180 / Math.PI;
 //			roll = Math.atan2(-accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
             updateScreen();
@@ -449,7 +450,7 @@ public class Meter extends Activity implements SensorEventListener {
             //Find the minutes
             stoppedSeconds = Long.parseLong(array[0]) * 60 * 60 + Long.parseLong(array[1]) * 60 + Integer.parseInt(array[2]);
         }
-        return stoppedSeconds*1000;
+        return stoppedSeconds * 1000;
     }
 
     private void pause() {
@@ -506,7 +507,7 @@ public class Meter extends Activity implements SensorEventListener {
 //			mTextField.setText("done!");
 //					Log.d(TAG, "num = " + getPositionNum());
                     countGoal++;
-                    count_tv.setText("Count:" + countGoal/instructionSet.length);
+                    count_tv.setText("Count:" + countGoal / instructionSet.length);
                     getNewNum();
                     progressBar.setProgress(0);
                     changeIndicator();

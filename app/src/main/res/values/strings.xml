@@ -77,4 +77,7 @@
     <string name="right_but">Right</string>
     <string name="average">Average</string>
     <string name="title_activity_static_mode">staticMode</string>
+    <string name="title_activity_mode_select">ModeSelectActivity</string>
+    <string name="title_activity_bluetooth_select">BluetoothSelectActivity</string>
+    <string name="title_activity_activity_sensor">ActivitySensor</string>
 </resources>
