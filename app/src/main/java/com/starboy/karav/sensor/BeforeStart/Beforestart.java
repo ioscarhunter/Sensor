@@ -22,6 +22,7 @@ import com.starboy.karav.sensor.R;
 import java.util.Arrays;
 
 public class BeforeStart extends AppCompatActivity {
+    private String ADDR = "address";
     private final int NUMCARD = 4;
     private final String TAG = "Befores";
     private RecyclerView mRecyclerView;
@@ -43,6 +44,7 @@ public class BeforeStart extends AppCompatActivity {
     private boolean cardon[];
 
     private int[] descriptionViewFullHeight;
+    private Bundle addr_bundle;
 
 
     @Override
@@ -51,6 +53,8 @@ public class BeforeStart extends AppCompatActivity {
         setContentView(R.layout.activity_beforestart);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        addr_bundle = this.getIntent().getExtras();
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         card = new CardView[NUMCARD];
@@ -117,7 +121,7 @@ public class BeforeStart extends AppCompatActivity {
                 switch (getCurrentOpen()) {
                     case  3:
                         myIntent1 = new Intent(BeforeStart.this, staticMode.class);
-
+                        myIntent1.putExtras(addr_bundle);
                         myIntent1.putExtra("total", set[curr].time_total);
 
                         myIntent1.putExtra("difficult", set[curr].difficult);
@@ -128,6 +132,7 @@ public class BeforeStart extends AppCompatActivity {
                         break;
                     default:
                         myIntent1 = new Intent(BeforeStart.this, Meter.class);
+                        myIntent1.putExtras(addr_bundle);
                         myIntent1.putExtra("still", set[curr].time_still);
                         myIntent1.putExtra("total", set[curr].time_total);
                         myIntent1.putExtra("inst", set[curr].instruction);

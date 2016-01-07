@@ -20,11 +20,14 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.starboy.karav.sensor.Bluetooth.BluetoothActivity;
+import com.starboy.karav.sensor.Bluetooth.Command;
+import com.starboy.karav.sensor.Bluetooth.MessageManage;
 import com.starboy.karav.sensor.R;
 import com.starboy.karav.sensor.Summary;
 
 
-public class Meter extends Activity implements SensorEventListener {
+public class Meter extends BluetoothActivity {
 
 
     String TAG = "Meter";
@@ -85,18 +88,11 @@ public class Meter extends Activity implements SensorEventListener {
     private float[] angle_unbalance;
     private int[] unbalanceCount;
 
-    float accels[];
+    double c_pitch = 0;
+    double c_roll = 0;
 
     double pitch;
     double roll;
-
-    double c_pitch = 0;
-    double c_roll = 0;
-    private int rotation;
-
-    private SensorManager senSensorManager;
-    private Sensor senAccelerometer;
-
     public Meter() {
 
     }
@@ -154,12 +150,7 @@ public class Meter extends Activity implements SensorEventListener {
 
         count_tv.setText("Count:" + countGoal);
 
-        senSensorManager = (SensorManager) this.getSystemService((SENSOR_SERVICE));
-        senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-//		senMagnetic = senSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_GAME);
-//		senSensorManager.registerListener(this, senMagnetic, SensorManager.SENSOR_DELAY_NORMAL);
-        rotation = getWindowManager().getDefaultDisplay().getRotation();
+
 
     }
 
@@ -241,36 +232,21 @@ public class Meter extends Activity implements SensorEventListener {
         });
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        Sensor mySensor = sensorEvent.sensor;
-        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER)
-            accels = Calculate.lowPass(sensorEvent.values.clone(), accels);
 
-        if (accels != null) {
-            switch (rotation) {
-                case Surface.ROTATION_0:
-                    pitch = Math.atan2(-accels[1], accels[2]) * 180 / Math.PI;
-                    roll = -Math.atan2(-accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
-                    break;
-                case Surface.ROTATION_90:
-                    pitch = Math.atan2(-accels[0], accels[2]) * 180 / Math.PI;
-                    roll = -Math.atan2(-accels[1], Math.sqrt(accels[0] * accels[0] + accels[2] * accels[2])) * 180 / Math.PI;
-                    break;
-                case Surface.ROTATION_180:
-                    pitch = Math.atan2(accels[1], accels[2]) * 180 / Math.PI;
-                    roll = -Math.atan2(accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
-                    break;
-                default:
-                    pitch = Math.atan2(accels[0], accels[2]) * 180 / Math.PI;
-                    roll = -Math.atan2(accels[1], Math.sqrt(accels[0] * accels[0] + accels[2] * accels[2])) * 180 / Math.PI;
-                    break;
-            }
-            pitch += 90;
-//			pitch = Math.atan2(-accels[1], accels[2]) * 180 / Math.PI;
-//			roll = Math.atan2(-accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
-            updateScreen();
-        }
+    @Override
+    protected void messageReceive(String s) {
+        Command c = MessageManage.Decode(s);
+        pitch = c.pitch;
+        roll = c.row;
+        updateScreen();
+    }
+
+    private void startsensor() {
+        sendMessage(MessageManage.Encode(Command.newCommand(1)));
+    }
+
+    private void stopsensor() {
+        sendMessage(MessageManage.Encode(Command.newCommand(0)));
     }
 
     private void updateScreen() {
@@ -460,6 +436,7 @@ public class Meter extends Activity implements SensorEventListener {
 //			setColourAnimation(start, R.color.clear, R.color.black, 100);//change to black
 //			timer_total.startAnimation(anim);
         fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_play));
+        stopsensor();
     }
 
     private void play() {
@@ -478,6 +455,7 @@ public class Meter extends Activity implements SensorEventListener {
 //				receiverActivity.sendMessage("T:" + "B:" + level);
 //				firstTime = false;
 //			}
+        startsensor();
     }
 
     private void stop() {
@@ -489,6 +467,7 @@ public class Meter extends Activity implements SensorEventListener {
         extra.putExtra("angle", angle_unbalance);
         extra.putExtra("u_count", unbalanceCount);
         Meter.this.startActivity(extra);
+        stopsensor();
     }
 
     private void stayStill() {
@@ -517,22 +496,6 @@ public class Meter extends Activity implements SensorEventListener {
         }
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        senSensorManager.unregisterListener(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_GAME);
-    }
 
     private void getNewNum() {
         if (instructionSet.length != 1) {

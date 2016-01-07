@@ -2,20 +2,11 @@ package com.starboy.karav.sensor.Meter;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
-import android.app.Fragment;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -26,12 +17,15 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.starboy.karav.sensor.Bluetooth.BluetoothActivity;
+import com.starboy.karav.sensor.Bluetooth.Command;
+import com.starboy.karav.sensor.Bluetooth.MessageManage;
 import com.starboy.karav.sensor.R;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
-public class staticMode extends Activity implements SensorEventListener {
+public class staticMode extends BluetoothActivity {
 
     private TextView display;
     private Button discover;
@@ -86,12 +80,6 @@ public class staticMode extends Activity implements SensorEventListener {
         setupUI();
         setupAnimate();
 
-        senSensorManager = (SensorManager) this.getSystemService((SENSOR_SERVICE));
-        senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-//		senMagnetic = senSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_GAME);
-//		senSensorManager.registerListener(this, senMagnetic, SensorManager.SENSOR_DELAY_NORMAL);
-        rotation = getWindowManager().getDefaultDisplay().getRotation();
     }
 
     private void assignBundle() {
@@ -112,30 +100,40 @@ public class staticMode extends Activity implements SensorEventListener {
         }
     }
 
-    private void startTime() {
+    private void toggleTime() {
         if (timeOn) {
-            start.setText(getResources().getString(R.string.resume));
-            timeOn = false;
-            timer.stop();
-            setColourAnimation(start, R.color.clear, R.color.black, 100);//change to black
-            timer.startAnimation(anim);
-//            receiverActivity.sendMessage("T:" + "P");
+            pause();
         } else {
-            start.setText(getResources().getString(R.string.pause));
-            timeOn = true;
-            int stoppedSeconds = timeStopped();
-            // Amount of time elapsed since the start button was pressed, minus the time paused
-            timer.setBase(SystemClock.elapsedRealtime() - stoppedSeconds * 1000);
-            timer.start();
-            setColourAnimation(start, R.color.black, R.color.clear, 100);
-            timer.clearAnimation();
-            if (!firstTime) {
-//                receiverActivity.sendMessage("T:" + "R");
-            } else {
-//                receiverActivity.sendMessage("T:" + "B:" + level);
-                firstTime = false;
-            }
+            play();
         }
+
+    }
+
+    private void play() {
+        start.setText(getResources().getString(R.string.pause));
+        timeOn = true;
+        int stoppedSeconds = timeStopped();
+        // Amount of time elapsed since the start button was pressed, minus the time paused
+        timer.setBase(SystemClock.elapsedRealtime() - stoppedSeconds * 1000);
+        timer.start();
+        setColourAnimation(start, R.color.black, R.color.clear, 100);
+        timer.clearAnimation();
+        if (!firstTime) {
+//                receiverActivity.sendMessage("T:" + "R");
+        } else {
+//                receiverActivity.sendMessage("T:" + "B:" + level);
+            firstTime = false;
+        }
+        startsensor();
+    }
+
+    private void pause() {
+        start.setText(getResources().getString(R.string.resume));
+        timeOn = false;
+        timer.stop();
+        setColourAnimation(start, R.color.clear, R.color.black, 100);//change to black
+        timer.startAnimation(anim);
+        stopsensor();
     }
 
     private int timeStopped() {
@@ -168,6 +166,7 @@ public class staticMode extends Activity implements SensorEventListener {
 //        extra.putInt("Level", grade);
 //        summary.setArguments(extra);
 //        receiverActivity.replaceFragment(summary);
+        stopsensor();
     }
 
 
@@ -183,7 +182,7 @@ public class staticMode extends Activity implements SensorEventListener {
             @Override
             public void onClick(View view) {
 //				Log.d(TAG, "start click");
-                startTime();
+                toggleTime();
             }
         });
         stop = (Button) findViewById(R.id.stop_but);
@@ -203,7 +202,7 @@ public class staticMode extends Activity implements SensorEventListener {
         setupTimer();
         setGrade(grade);
         setStatus(0);
-        startTime();
+        toggleTime();
     }
 
     private void setupTimer() {
@@ -310,38 +309,20 @@ public class staticMode extends Activity implements SensorEventListener {
         setGrade(level);
         setStatus(status);
     }
-
-
     @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        Sensor mySensor = sensorEvent.sensor;
-        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER)
-            accels = Calculate.lowPass(sensorEvent.values.clone(), accels);
+    protected void messageReceive(String s) {
+        Command c = MessageManage.Decode(s);
+        pitch = c.pitch;
+        roll = c.row;
+        updateScreen();
+    }
 
-        if (accels != null) {
-            switch (rotation) {
-                case Surface.ROTATION_0:
-                    pitch = Math.atan2(-accels[1], accels[2]) * 180 / Math.PI;
-                    roll = -Math.atan2(-accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
-                    break;
-                case Surface.ROTATION_90:
-                    pitch = Math.atan2(-accels[0], accels[2]) * 180 / Math.PI;
-                    roll = -Math.atan2(-accels[1], Math.sqrt(accels[0] * accels[0] + accels[2] * accels[2])) * 180 / Math.PI;
-                    break;
-                case Surface.ROTATION_180:
-                    pitch = Math.atan2(accels[1], accels[2]) * 180 / Math.PI;
-                    roll = -Math.atan2(accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
-                    break;
-                default:
-                    pitch = Math.atan2(accels[0], accels[2]) * 180 / Math.PI;
-                    roll = -Math.atan2(accels[1], Math.sqrt(accels[0] * accels[0] + accels[2] * accels[2])) * 180 / Math.PI;
-                    break;
-            }
-            pitch += 90;
-//			pitch = Math.atan2(-accels[1], accels[2]) * 180 / Math.PI;
-//			roll = Math.atan2(-accels[0], Math.sqrt(accels[1] * accels[1] + accels[2] * accels[2])) * 180 / Math.PI;
-            updateScreen();
-        }
+    private void startsensor() {
+        sendMessage(MessageManage.Encode(Command.newCommand(1)));
+    }
+
+    private void stopsensor() {
+        sendMessage(MessageManage.Encode(Command.newCommand(0)));
     }
 
     private void updateScreen() {
@@ -377,21 +358,4 @@ public class staticMode extends Activity implements SensorEventListener {
         return grade;
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        senSensorManager.unregisterListener(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_GAME);
-    }
 }
