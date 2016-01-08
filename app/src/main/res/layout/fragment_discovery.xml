@@ -3,14 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    tools:showIn="@layout/content_bluetooth_select">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_above="@+id/linearLayout"
         android:layout_alignParentTop="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/title_paired_devices"
@@ -22,14 +24,18 @@
             android:layout_marginLeft="0dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
-            android:background="#ff275866"
             android:paddingLeft="5dp"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:text="@string/title_paired_devices"
-            android:textColor="#fff"
-            android:textSize="20sp"
-            android:visibility="visible" />
+            android:textColor="@color/blue_A400"
+            android:textSize="25dp"
+            android:visibility="visible"
+            android:gravity="clip_horizontal|center_horizontal"
+            android:textStyle="normal"
+            android:paddingTop="3dp"
+            android:paddingBottom="5dp"
+            android:layout_marginBottom="5dp" />
 
         <ListView
             android:id="@+id/paired_devices"
@@ -45,7 +51,13 @@
             android:stackFromBottom="false"
             tools:listfooter="@layout/device_name"
             tools:listheader="@layout/device_name"
-            tools:listitem="@android:layout/simple_list_item_1" />
+            tools:listitem="@layout/device_name"
+            android:visibility="visible"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="5dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="5dp"
+            android:text="No paired Device" />
 
         <TextView
             android:id="@+id/title_new_devices"
@@ -54,14 +66,17 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/paired_devices"
-            android:background="#666"
             android:paddingLeft="5dp"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:text="@string/title_other_devices"
-            android:textColor="#fff"
+            android:textColor="@color/purple_orchid"
             android:textSize="20sp"
-            android:visibility="visible" />
+            android:visibility="gone"
+            android:textStyle="italic"
+            android:gravity="center"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp" />
 
         <ListView
             android:id="@+id/new_devices"
@@ -80,7 +95,11 @@
             android:stackFromBottom="false"
             tools:listfooter="@layout/device_name"
             tools:listheader="@layout/device_name"
-            tools:listitem="@android:layout/simple_list_item_1" />
+            tools:listitem="@android:layout/simple_list_item_1"
+            android:text="Scanning"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="5dp"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -101,16 +120,18 @@
             android:background="#ff0d8ee8"
             android:singleLine="false"
             android:text="@string/button_scan"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/discoverable"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#ffd5662e"
-            android:text="@string/discoverable"
-            android:textColor="#FFFFFF" />
+            android:text="Pair new Device"
+            android:textColor="@color/deep_orange500"
+            android:theme="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:background="@android:color/transparent" />
     </LinearLayout>
 
 </RelativeLayout>

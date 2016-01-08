@@ -39,6 +39,8 @@ import android.widget.Toast;
 
 import com.starboy.karav.sensor.R;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 //import com.example.android.common.logger.Log;
@@ -83,6 +85,8 @@ public class BluetoothDiscoveryFragment extends Fragment {
      */
 //    private BluetoothChatService mChatService = null;
 //
+
+    private Map<String, String> MacMap = new HashMap<>();
     /**
      * Local Bluetooth adapter
      */
@@ -117,17 +121,16 @@ public class BluetoothDiscoveryFragment extends Fragment {
             String info = ((TextView) v).getText().toString();
             Log.d(TAG, "Get Mac" + info);
             if ((!info.equals(getResources().getText(R.string.none_found).toString())) && (!info.equals(getResources().getText(R.string.none_paired).toString()))) {
-                String address = info.substring(info.length() - 17);
+                String address = MacMap.get(info);
 
 //                 Create the result Intent and include the MAC address
-                Bundle MacData = new Bundle();
-                MacData.putString(EXTRA_DEVICE_ADDRESS, address);
+                Log.d(TAG, "addr" + address);
 
 ////				 Create the result Intent and include the MAC address
 //				Intent intent = new Intent();
 //				intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
 
-                ((BluetoothSelectActivity) getActivity()).setBluetoothDevice(MacData);
+                ((BluetoothSelectActivity) getActivity()).setBluetoothDevice(address);
 
             }
         }
@@ -151,7 +154,8 @@ public class BluetoothDiscoveryFragment extends Fragment {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // If it's already paired, skip it, because it's been listed already
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                    mNewDevicesArrayAdapter.add(device.getName());
+                    MacMap.put(device.getName(), device.getAddress());
                 }
                 // When discovery is finished, change the Activity title
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
@@ -250,7 +254,8 @@ public class BluetoothDiscoveryFragment extends Fragment {
         if (pairedDevices.size() > 0) {
             RootView.findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
-                pairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                pairedDevicesArrayAdapter.add(device.getName());
+                MacMap.put(device.getName(), device.getAddress());
             }
         } else {
             String noDevices = getResources().getText(R.string.none_paired).toString();
@@ -263,11 +268,14 @@ public class BluetoothDiscoveryFragment extends Fragment {
      * Makes this device discoverable.
      */
     private void ensureDiscoverable() {
-        if (mBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 120);
-            startActivity(discoverableIntent);
-        }
+//        if (mBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+//            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+//            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
+//            startActivity(discoverableIntent);
+//        }
+        Intent intentOpenBluetoothSettings = new Intent();
+        intentOpenBluetoothSettings.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+        startActivity(intentOpenBluetoothSettings);
     }
 
 

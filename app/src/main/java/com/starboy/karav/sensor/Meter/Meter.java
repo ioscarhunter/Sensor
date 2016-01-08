@@ -11,6 +11,7 @@ import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +30,7 @@ import com.starboy.karav.sensor.Summary;
 
 public class Meter extends BluetoothActivity {
 
-
+    public static String EXTRA_DEVICE_ADDRESS = "address";
     String TAG = "Meter";
 
     private final int FNUM = 0;
@@ -65,6 +66,8 @@ public class Meter extends BluetoothActivity {
     private Button stop_but;
 
     private RelativeLayout goalLayout;
+
+
     private RelativeLayout FBLayout;
     private RelativeLayout LRLayout;
 
@@ -93,6 +96,8 @@ public class Meter extends BluetoothActivity {
 
     double pitch;
     double roll;
+
+    private String macaddr;
     public Meter() {
 
     }
@@ -154,6 +159,12 @@ public class Meter extends BluetoothActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        connectDevice(macaddr);
+    }
+
     private void setButton() {
         stop_but = (Button) findViewById(R.id.stop_but);
         stop_but.setOnClickListener(new View.OnClickListener() {
@@ -197,6 +208,8 @@ public class Meter extends BluetoothActivity {
         time_still = b.getLong("still");
         time_total = b.getLong("total");
         difficulty = b.getDouble("difficult");
+        macaddr = b.getString(EXTRA_DEVICE_ADDRESS);
+        Log.d(TAG, "addr" + macaddr);
     }
 
     private void setBound() {

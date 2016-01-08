@@ -21,9 +21,9 @@ public class MessageManage {
         String out = "";
         out += com.what;
         out += ":";
-        out += com.pitch;
+        out += String.format("%.2f", com.pitch);
         out += ":";
-        out += com.row;
+        out += String.format("%.2f", com.row);
         out += ":";
         return out;
     }

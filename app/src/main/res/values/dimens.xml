@@ -35,7 +35,7 @@
     <dimen name="level_card_height">84dp</dimen>
 
     <dimen name="db_circle_size">48dp</dimen>
-    <dimen name="DisplaydeviceTextsize">18sp</dimen>
+    <dimen name="DisplaydeviceTextsize">22sp</dimen>
     <dimen name="LevelButtonMargin">5dp</dimen>
     <dimen name="average_size">50dp</dimen>
     <dimen name="avg_size">25dp</dimen>

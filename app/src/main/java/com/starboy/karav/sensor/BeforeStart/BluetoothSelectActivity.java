@@ -30,7 +30,7 @@ public class BluetoothSelectActivity extends AppCompatActivity {
         });
     }
 
-    public void setBluetoothDevice(Bundle macaddress) {
+    public void setBluetoothDevice(String macaddress) {
         Intent address = new Intent(BluetoothSelectActivity.this, BeforeStart.class);
         address.putExtra(ADDR, macaddress);
         BluetoothSelectActivity.this.startActivity(address);

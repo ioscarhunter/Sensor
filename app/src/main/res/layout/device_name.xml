@@ -15,7 +15,10 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/Device_name"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:padding="5dp"
-    android:text="Device name \nAA:BB:CC:DD:EE"
-    android:textSize="@dimen/DisplaydeviceTextsize" />
+    android:text="Device name"
+    android:textSize="@dimen/DisplaydeviceTextsize"
+    android:gravity="center_vertical|center_horizontal"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp" />

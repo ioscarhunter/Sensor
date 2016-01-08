@@ -115,7 +115,7 @@ public class SensorActivity extends BluetoothActivity implements SensorEventList
     @Override
     protected void onResume() {
         super.onResume();
-        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+//        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_GAME);
     }
 
 }

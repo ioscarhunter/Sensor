@@ -27,6 +27,8 @@ import static java.lang.Math.sqrt;
 
 public class staticMode extends BluetoothActivity {
 
+
+    public static String EXTRA_DEVICE_ADDRESS = "address";
     private TextView display;
     private Button discover;
     private TextView status_tv;
@@ -68,6 +70,7 @@ public class staticMode extends BluetoothActivity {
 
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;
+    private String macaddr;
 
 
     @Override
@@ -87,6 +90,7 @@ public class staticMode extends BluetoothActivity {
 
         time_total = b.getLong("total");
         difficulty = b.getDouble("difficult");
+        macaddr = b.getString(EXTRA_DEVICE_ADDRESS);
     }
 
 
