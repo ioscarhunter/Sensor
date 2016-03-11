@@ -29,10 +29,9 @@
             android:paddingEnd="5dp"
             android:text="@string/title_paired_devices"
             android:textColor="@color/blue_A400"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:visibility="visible"
             android:gravity="clip_horizontal|center_horizontal"
-            android:textStyle="normal"
             android:paddingTop="3dp"
             android:paddingBottom="5dp"
             android:layout_marginBottom="5dp" />
@@ -131,7 +130,7 @@
             android:text="Pair new Device"
             android:textColor="@color/deep_orange500"
             android:theme="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:background="@android:color/transparent" />
+            android:background="@color/background_material_light" />
     </LinearLayout>
 
 </RelativeLayout>

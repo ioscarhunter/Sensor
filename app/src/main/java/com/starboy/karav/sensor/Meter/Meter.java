@@ -1,18 +1,12 @@
 package com.starboy.karav.sensor.Meter;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
-import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -25,7 +19,7 @@ import com.starboy.karav.sensor.Bluetooth.BluetoothActivity;
 import com.starboy.karav.sensor.Bluetooth.Command;
 import com.starboy.karav.sensor.Bluetooth.MessageManage;
 import com.starboy.karav.sensor.R;
-import com.starboy.karav.sensor.Summary;
+import com.starboy.karav.sensor.Summary.Summary;
 
 
 public class Meter extends BluetoothActivity {
@@ -90,6 +84,7 @@ public class Meter extends BluetoothActivity {
 
     private float[] angle_unbalance;
     private int[] unbalanceCount;
+    private int[] totalCount;
 
     double c_pitch = 0;
     double c_roll = 0;
@@ -98,6 +93,7 @@ public class Meter extends BluetoothActivity {
     double roll;
 
     private String macaddr;
+
     public Meter() {
 
     }
@@ -109,7 +105,6 @@ public class Meter extends BluetoothActivity {
 
         assignBundle();
 
-        tv = (TextView) findViewById(R.id.textView);
         pit = (TextView) findViewById(R.id.pitch);
         rol = (TextView) findViewById(R.id.roll);
         cal = (Button) findViewById(R.id.button);
@@ -127,6 +122,7 @@ public class Meter extends BluetoothActivity {
         countGoal = 0;
         angle_unbalance = new float[4];
         unbalanceCount = new int[4];
+        totalCount = new int[4];
 
         progressBar.setMax(time_still);
 
@@ -154,7 +150,6 @@ public class Meter extends BluetoothActivity {
         ybar = (SeekBar) findViewById(R.id.ybar);
 
         count_tv.setText("Count:" + countGoal);
-
 
 
     }
@@ -217,7 +212,7 @@ public class Meter extends BluetoothActivity {
         downBound = boundSet[1];
         rightBound = boundSet[2];
         leftBound = boundSet[3];
-        ;
+
     }
 
     private void setTimer() {
@@ -274,7 +269,9 @@ public class Meter extends BluetoothActivity {
     }
 
     private void setButtonColour() {
+        totalCount[getPositionNum()]++;
         if ((getPositionNum() == FNUM) || (getPositionNum() == BNUM)) {
+
             if (c_pitch - pitch >= upBound - difficulty) {
                 if (c_pitch - pitch <= upBound) {
                     if (getPositionNum() == FNUM) {
@@ -300,7 +297,7 @@ public class Meter extends BluetoothActivity {
 
                     goalLayout.setBackgroundColor(getResources().getColor(R.color.red_A400));
                     goal.setText(getResources().getString(R.string.unbalance));
-                    angle_unbalance[0] += c_pitch;
+                    angle_unbalance[0] += (c_pitch - pitch);
                     unbalanceCount[0]++;
                 }
             } else if (c_pitch - pitch <= downBound + difficulty) {
@@ -329,7 +326,7 @@ public class Meter extends BluetoothActivity {
 
                     goalLayout.setBackgroundColor(getResources().getColor(R.color.red_A400));
                     goal.setText(getResources().getString(R.string.unbalance));
-                    angle_unbalance[1] += c_pitch;
+                    angle_unbalance[1] += (c_pitch - pitch);
                     unbalanceCount[1]++;
                 }
             } else {
@@ -372,8 +369,8 @@ public class Meter extends BluetoothActivity {
 
                     goalLayout.setBackgroundColor(getResources().getColor(R.color.red_A400));
                     goal.setText(getResources().getString(R.string.unbalance));
-                    angle_unbalance[2] += c_roll;
-                    unbalanceCount[2]++;
+                    angle_unbalance[3] += (c_roll - roll);
+                    unbalanceCount[3]++;
                 }
             } else if (c_roll - roll <= leftBound + difficulty) {
                 if (c_roll - roll >= leftBound) {
@@ -399,8 +396,8 @@ public class Meter extends BluetoothActivity {
 
                     goalLayout.setBackgroundColor(getResources().getColor(R.color.red_A400));
                     goal.setText(getResources().getString(R.string.unbalance));
-                    angle_unbalance[3] += c_roll;
-                    unbalanceCount[3]++;
+                    angle_unbalance[2] += (c_roll - roll);
+                    unbalanceCount[2]++;
                 }
             } else {
 
@@ -479,8 +476,13 @@ public class Meter extends BluetoothActivity {
         extra.putExtra("count", countGoal);
         extra.putExtra("angle", angle_unbalance);
         extra.putExtra("u_count", unbalanceCount);
-        Meter.this.startActivity(extra);
+        extra.putExtra("t_count", totalCount);
+        extra.putExtra("goal", countGoal / instructionSet.length);
+        extra.putExtra("inst", instructionSet);
         stopsensor();
+        Meter.this.finish();
+        Meter.this.startActivity(extra);
+
     }
 
     private void stayStill() {

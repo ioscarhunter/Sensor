@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sensor</string>
+    <string name="app_name">TU Balance</string>
 
     <string name="hello_world">Hello world!</string>
 
@@ -69,15 +69,16 @@
     <string name="minus_but">-</string>
     <string name="name">Name</string>
     <string name="title_activity_name_list">NameList</string>
-    <string name="updown">Up/Down</string>
-    <string name="leftright">Left/Right</string>
+    <string name="updown">VERTICAL</string>
+    <string name="leftright">HORIZONTAL</string>
     <string name="up_but">UP</string>
     <string name="down_but">Down</string>
     <string name="left_but">Left</string>
     <string name="right_but">Right</string>
     <string name="average">Average</string>
+
     <string name="title_activity_static_mode">staticMode</string>
-    <string name="title_activity_mode_select">ModeSelectActivity</string>
-    <string name="title_activity_bluetooth_select">BluetoothSelectActivity</string>
-    <string name="title_activity_activity_sensor">ActivitySensor</string>
+    <string name="title_activity_mode_select">Select Mode</string>
+    <string name="title_activity_bluetooth_select">Select Device</string>
+    <string name="title_activity_activity_sensor">Send Mode</string>
 </resources>

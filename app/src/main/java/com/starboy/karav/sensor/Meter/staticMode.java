@@ -2,6 +2,7 @@ package com.starboy.karav.sensor.Meter;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -17,10 +18,15 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.akexorcist.roundcornerprogressbar.RoundCornerTextView;
+import com.akexorcist.roundcornerprogressbar.TextRoundCornerProgressBar;
 import com.starboy.karav.sensor.Bluetooth.BluetoothActivity;
 import com.starboy.karav.sensor.Bluetooth.Command;
 import com.starboy.karav.sensor.Bluetooth.MessageManage;
 import com.starboy.karav.sensor.R;
+import com.starboy.karav.sensor.Summary.Summary;
+import com.starboy.karav.sensor.Summary.staticSummary;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
@@ -32,21 +38,18 @@ public class staticMode extends BluetoothActivity {
     private TextView display;
     private Button discover;
     private TextView status_tv;
-    private RelativeLayout status_level;
     private Button start;
     private Button stop;
 
     private Chronometer countdown;
     private Chronometer timer;
     private TextView minusSign;
-    private RatingBar rating;
+    private TextRoundCornerProgressBar rating;
     private RelativeLayout status_layout;
 
-
-    private int grade;
-    private int level;
     private long totalCount;
     private long balanceCount;
+
 
     private boolean firstTime;
     private boolean timeOn;
@@ -64,12 +67,6 @@ public class staticMode extends BluetoothActivity {
     double pitch;
     double roll;
 
-    double c_pitch = 0;
-    double c_roll = 0;
-    private int rotation;
-
-    private SensorManager senSensorManager;
-    private Sensor senAccelerometer;
     private String macaddr;
 
 
@@ -161,23 +158,22 @@ public class staticMode extends BluetoothActivity {
         // stop countdown
         countdown.stop();
         int totalTime = timeStopped();
-//		Log.d(TAG, totalTime + " ");
-        // sent stop message to sender
-//        receiverActivity.sendMessage("T:S:" + totalTime);
-//        Fragment summary = new SummaryFragment();
-//        Bundle extra = new Bundle();
-//        extra.putInt("Time", totalTime);
-//        extra.putInt("Level", grade);
-//        summary.setArguments(extra);
-//        receiverActivity.replaceFragment(summary);
+        Intent extra = new Intent(staticMode.this, staticSummary.class);
+        extra.putExtra("Time", totalTime);
+        extra.putExtra("total", totalCount);
+        extra.putExtra("balance", balanceCount);
+        extra.putExtra("difficult", difficulty);
+
         stopsensor();
+        staticMode.this.finish();
+        staticMode.this.startActivity(extra);
+
     }
 
 
     private void setupUI() {
         firstTime = true;
         status_tv = (TextView) findViewById(R.id.status);
-        status_level = (RelativeLayout) findViewById(R.id.ratingContainer);
         minusSign = (TextView) findViewById(R.id.minusSign);
         currentColour = R.color.c_l5;
 
@@ -200,13 +196,15 @@ public class staticMode extends BluetoothActivity {
         status_layout = (RelativeLayout) findViewById(R.id.status_layout);
 
         start.setBackgroundColor(getResources().getColor(R.color.black));
-        rating = (RatingBar) findViewById(R.id.level_rating);
+        rating = (TextRoundCornerProgressBar) findViewById(R.id.process);
         timeOn = false;
-        grade = 5;
+        balanceCount = 1;
+        totalCount = 1;
+
         setupTimer();
-        setGrade(grade);
         setStatus(0);
-        toggleTime();
+        updateProgress(rating);
+
     }
 
     private void setupTimer() {
@@ -248,49 +246,6 @@ public class staticMode extends BluetoothActivity {
         anim.setRepeatCount(Animation.INFINITE);
     }
 
-    private void setGrade(int grade) {
-        rating.setProgress(grade);
-        switch (grade) {
-            case 1:
-                setColourAnimation(status_level, currentColour, R.color.c_l1, 300);
-                currentColour = R.color.c_l1;
-                break;
-            case 2:
-                setColourAnimation(status_level, currentColour, R.color.c_l2, 300);
-                currentColour = R.color.c_l2;
-                break;
-            case 3:
-                setColourAnimation(status_level, currentColour, R.color.c_l3, 300);
-                currentColour = R.color.c_l3;
-                break;
-            case 4:
-                setColourAnimation(status_level, currentColour, R.color.c_l4, 300);
-                currentColour = R.color.c_l4;
-                break;
-            case 5:
-                setColourAnimation(status_level, currentColour, R.color.c_l5, 300);
-                currentColour = R.color.c_l5;
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void setColourAnimation(final ViewGroup textView, int from, int to, int duration) {
-        Integer colorFrom = getResources().getColor(from);
-        Integer colorTo = getResources().getColor(to);
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-        colorAnimation.setDuration(duration);
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                textView.setBackgroundColor((Integer) animator.getAnimatedValue());
-            }
-
-        });
-        colorAnimation.start();
-    }
 
     private void setColourAnimation(final TextView textView, int from, int to, int duration) {
         Integer colorFrom = getResources().getColor(from);
@@ -308,11 +263,11 @@ public class staticMode extends BluetoothActivity {
         colorAnimation.start();
     }
 
-    public void updateData(int status, int level) {//function receive data from activity
-        this.grade = level;
-        setGrade(level);
+    public void updateData(int status) {//function receive data from activity
+        updateProgress(rating);
         setStatus(status);
     }
+
     @Override
     protected void messageReceive(String s) {
         Command c = MessageManage.Decode(s);
@@ -329,37 +284,53 @@ public class staticMode extends BluetoothActivity {
         sendMessage(MessageManage.Encode(Command.newCommand(0)));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        connectDevice(macaddr);
+
+    }
+
     private void updateScreen() {
         double r = sqrt(pow(pitch, 2) + pow(roll, 2));
         int status;
-        int level;
         totalCount++;
         if (r < (8 - difficulty) && pitch > (-4)) {
             balanceCount++;
             status = 0;
         } else {
+
             status = 1;
         }
-        level = rate(totalCount, balanceCount);
-        updateData(status, level);
+
+        updateData(status);
     }
 
-    private int rate(long all_num, long balance_num) {
-        int grade;
-        double percentage = ((double) balance_num / (double) all_num) * 100;
-        Log.d("SensorProcess", percentage + " %");
-        if (percentage >= 80) {
-            grade = 5;
-        } else if (percentage >= 60) {
-            grade = 4;
-        } else if (percentage >= 40) {
-            grade = 3;
-        } else if (percentage >= 20) {
-            grade = 2;
-        } else {
-            grade = 1;
+
+    private void updateProgressColor(TextRoundCornerProgressBar process) {
+        float progress = process.getProgress();
+        if (progress <= 25) {
+            process.setProgressColor(getResources().getColor(R.color.custom_progress_red_progress));
+        } else if (progress > 25 && progress <= 50) {
+            process.setProgressColor(getResources().getColor(R.color.custom_progress_orange_progress));
+        } else if (progress > 50 && progress <= 75) {
+            process.setProgressColor(getResources().getColor(R.color.custom_progress_yellow_progress));
+        } else if (progress > 75) {
+            process.setProgressColor(getResources().getColor(R.color.custom_progress_green_progress));
         }
-        return grade;
     }
 
+    private float getpercentage() {
+        return ((balanceCount / (float) totalCount) * 100);
+    }
+
+    private void updateTextProgress(TextRoundCornerProgressBar process) {
+        process.setProgressText((Math.round(process.getProgress() * 10) / 10.0) + "%");
+    }
+
+    private void updateProgress(TextRoundCornerProgressBar progress) {
+        progress.setProgress(getpercentage());
+        updateProgressColor(progress);
+        updateTextProgress(progress);
+    }
 }

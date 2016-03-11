@@ -12,16 +12,16 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/DarkTheme"
-    android:weightSum="1"
-    tools:context=".MainActivity">
+    android:weightSum="1">
 
     <com.starboy.karav.sensor.Meter.SquareView
         android:id="@+id/sq"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_above="@+id/GoalCard"
+        android:gravity="center">
         <!--android:layout_weight="0.38">-->
 
         <RelativeLayout
@@ -85,7 +85,6 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:paddingRight="40dp"
-                    android:text="Large Text"
                     android:textColor="@color/white_alpha"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="30sp"/>
@@ -142,7 +141,6 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:paddingTop="50dp"
-                    android:text="Large Text"
                     android:textColor="@color/white_arctic"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="30sp"/>
@@ -175,31 +173,24 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:text="Small Text"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <Button
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Calibrate"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:text="Calibrate"/>
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
             <TextView
                 android:id="@+id/count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Text"
-                android:textSize="20sp"
+                android:text="Count:3"
+                android:textSize="30dp"
                 android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
@@ -300,7 +291,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|center|center_horizontal"
-                android:text="@string/goal"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/goal_size"
                 android:layout_alignParentTop="true"

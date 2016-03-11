@@ -10,7 +10,7 @@
         <item name="android:windowBackground">@color/window_background</item>
     </style>
 
-    <style name="DarkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/grey_700</item>
         <item name="colorPrimary">@color/grey_500</item>
@@ -35,12 +35,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="intro.NoActionBar">
+    <style name="intro.NoActionBar" parent="Theme.AppCompat">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="DarkTheme.NoActionBar">
+    <style name="DarkTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColorSecondary">@color/secondary_text_material_light</item>

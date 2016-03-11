@@ -51,6 +51,7 @@
             android:textSize="45dp" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/ratingContainer"
         android:layout_width="match_parent"

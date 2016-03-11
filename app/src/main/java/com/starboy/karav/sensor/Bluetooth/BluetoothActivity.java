@@ -5,12 +5,14 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Surface;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -98,6 +100,7 @@ public class BluetoothActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        mLockScreenRotation();
         // Get local Bluetooth adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         // If BT is not on, request that it be enabled.
@@ -154,11 +157,11 @@ public class BluetoothActivity extends AppCompatActivity {
      *
      * @param message A string of text to send.
      */
-    public void sendMessage(String message) {
+    public boolean sendMessage(String message) {
 //		// Check that we're actually connected before trying anything
         if (!isConnect()) {
             Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
 
         // Check that there's actually something to send
@@ -166,7 +169,9 @@ public class BluetoothActivity extends AppCompatActivity {
             // Get the message bytes and tell the BluetoothChatService to write
             byte[] send = message.getBytes();
             mChatService.write(send);
+            return true;
         }
+        return true;
     }
 
     /**
@@ -214,5 +219,26 @@ public class BluetoothActivity extends AppCompatActivity {
         ActionBar actionBar = setAColour(colour);
         if (actionBar != null) actionBar.setTitle(heading);
 
+    }
+
+    private void mLockScreenRotation() {
+        // Stop the screen orientation changing during an event
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+//        switch (getWindowManager().getDefaultDisplay().getRotation()) {
+//            case Surface.ROTATION_0:
+//                this.setRequestedOrientation(
+//                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//                break;
+//            case Surface.ROTATION_90:
+//                this.setRequestedOrientation(
+//                        ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//                break;
+//            case Surface.ROTATION_180:
+//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+//                break;
+//            case Surface.ROTATION_270:
+//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+//                break;
+//        }
     }
 }
