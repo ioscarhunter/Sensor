@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:keepScreenOn="true"
-    tools:context=".Sensor.SensorActivity">
+    tools:context=".sensor.SensorActivity">
 
     <include layout="@layout/content_activity_sensor" />
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:theme="@style/Base.Theme.AppCompat.Light"
-    tools:context=".Summary.Summary">
+    tools:context=".summary.Summary">
 
     <include layout="@layout/content_summary"/>
 

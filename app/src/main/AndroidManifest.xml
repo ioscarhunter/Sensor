@@ -13,23 +13,23 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Meter.Meter"
+            android:name=".meter.Meter"
             android:label="@string/app_name"
             android:theme="@style/DarkTheme" />
         <activity
-            android:name=".BeforeStart.BeforeStart"
+            android:name=".beforeStart.BeforeStart"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Summary.Summary"
+            android:name=".summary.Summary"
             android:label="@string/title_activity_summary"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Meter.staticMode"
+            android:name=".meter.StaticMode"
             android:label="@string/title_activity_static_mode"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".BeforeStart.ModeSelectActivity"
+            android:name=".beforeStart.ModeSelectActivity"
             android:label="@string/title_activity_mode_select"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -39,14 +39,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BeforeStart.BluetoothSelectActivity"
+            android:name=".beforeStart.BluetoothSelectActivity"
             android:label="@string/title_activity_bluetooth_select"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Sensor.SensorActivity"
+            android:name=".sensor.SensorActivity"
             android:label="@string/title_activity_activity_sensor"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Summary.staticSummary"></activity>
+        <activity android:name=".summary.StaticSummary"/>
     </application>
 
 </manifest>

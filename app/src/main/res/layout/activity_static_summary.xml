@@ -21,7 +21,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#ff000000"
         android:textIsSelectable="false"
-        android:textSize="40sp" />
+        android:textSize="40sp"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textView4" />
 
     <RelativeLayout
         android:layout_width="match_parent"

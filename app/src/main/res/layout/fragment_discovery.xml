@@ -48,9 +48,9 @@
             android:scrollingCache="false"
             android:smoothScrollbar="false"
             android:stackFromBottom="false"
-            tools:listfooter="@layout/device_name"
-            tools:listheader="@layout/device_name"
-            tools:listitem="@layout/device_name"
+            tools:listfooter="@layout/item_device_name"
+            tools:listheader="@layout/item_device_name"
+            tools:listitem="@layout/item_device_name"
             android:visibility="visible"
             android:divider="@android:color/transparent"
             android:dividerHeight="5dp"
@@ -92,8 +92,8 @@
             android:scrollingCache="false"
             android:smoothScrollbar="false"
             android:stackFromBottom="false"
-            tools:listfooter="@layout/device_name"
-            tools:listheader="@layout/device_name"
+            tools:listfooter="@layout/item_device_name"
+            tools:listheader="@layout/item_device_name"
             tools:listitem="@android:layout/simple_list_item_1"
             android:text="Scanning"
             android:divider="@android:color/transparent"
@@ -130,7 +130,7 @@
             android:text="Pair new Device"
             android:textColor="@color/deep_orange500"
             android:theme="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:background="@color/background_material_light" />
+            android:background="@android:color/white" />
     </LinearLayout>
 
 </RelativeLayout>

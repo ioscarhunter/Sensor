@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/material_grey_600"
@@ -14,20 +12,20 @@
     android:theme="@style/DarkTheme"
     android:weightSum="1">
 
-    <com.starboy.karav.sensor.Meter.SquareView
+    <com.starboy.karav.sensor.meter.SquareView
         android:id="@+id/sq"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/GoalCard"
         android:layout_alignParentTop="true"
         android:layout_gravity="center"
-        android:layout_above="@+id/GoalCard"
+
         android:gravity="center">
         <!--android:layout_weight="0.38">-->
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/FBLayout"
@@ -50,7 +48,7 @@
                         android:layout_height="0dp"
                         android:theme="@style/DarkTheme"
                         android:thumb="@mipmap/ic_launcher"
-                        app:seekBarRotation="CW270"/>
+                        app:seekBarRotation="CW270" />
                     <!-- Rotation: CW90 or CW270 -->
                 </com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBarWrapper>
 
@@ -64,7 +62,7 @@
                     android:enabled="false"
                     android:text="@string/up"
                     android:textColor="@color/blue_royal"
-                    android:textSize="30sp"/>
+                    android:textSize="30sp" />
 
                 <Button
                     android:id="@+id/back"
@@ -76,7 +74,7 @@
                     android:enabled="false"
                     android:text="@string/down"
                     android:textColor="@color/blue_royal"
-                    android:textSize="30sp"/>
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/pitch"
@@ -85,9 +83,9 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:paddingRight="40dp"
-                    android:textColor="@color/white_alpha"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="30sp"/>
+                    android:textColor="@color/white_alpha"
+                    android:textSize="30sp" />
 
             </RelativeLayout>
 
@@ -107,7 +105,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:theme="@style/DarkTheme"
-                    android:thumb="@mipmap/ic_launcher"/>
+                    android:thumb="@mipmap/ic_launcher" />
 
                 <Button
                     android:id="@+id/left"
@@ -117,9 +115,9 @@
                     android:layout_centerVertical="true"
                     android:background="@drawable/white_circle"
                     android:enabled="false"
-                    android:textColor="@color/blue_royal"
                     android:text="@string/left"
-                    android:textSize="30sp"/>
+                    android:textColor="@color/blue_royal"
+                    android:textSize="30sp" />
 
                 <Button
                     android:id="@+id/right"
@@ -129,9 +127,9 @@
                     android:layout_centerVertical="true"
                     android:background="@drawable/white_circle"
                     android:enabled="false"
-                    android:textColor="@color/blue_royal"
                     android:text="@string/right"
-                    android:textSize="30sp"/>
+                    android:textColor="@color/blue_royal"
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/roll"
@@ -141,162 +139,169 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:paddingTop="50dp"
-                    android:textColor="@color/white_arctic"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="30sp"/>
+                    android:textColor="@color/white_arctic"
+                    android:textSize="30sp" />
 
             </RelativeLayout>
 
 
         </RelativeLayout>
-    </com.starboy.karav.sensor.Meter.SquareView>
+    </com.starboy.karav.sensor.meter.SquareView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/InfoCard"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/TimeCard"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="false"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/card_margin"
+            android:layout_marginBottom="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:elevation="@dimen/card_elevation"
+            android:paddingLeft="@dimen/card_padding"
+            android:paddingRight="@dimen/card_padding">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true">
 
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/InfoCard"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/TimeCard"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentRight="false"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/card_margin"
-        android:layout_marginBottom="@dimen/card_margin"
-        android:layout_marginLeft="@dimen/card_margin"
-        android:layout_marginRight="@dimen/card_margin"
-        android:elevation="@dimen/card_elevation"
-        android:paddingLeft="@dimen/card_padding"
-        android:paddingRight="@dimen/card_padding">
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:text="Calibrate" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true">
+                <TextView
+                    android:id="@+id/count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="Count:3"
+                    android:textSize="30dp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/TimeCard"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:elevation="@dimen/card_elevation"
+            android:padding="@dimen/card_margin"
+            android:paddingBottom="0dp"
+            android:paddingLeft="@dimen/card_padding"
+            android:paddingRight="@dimen/card_padding">
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Calibrate"
-                android:layout_alignParentTop="true"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true">
+
+                <Chronometer
+                    android:id="@+id/timer_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/stop_but"
+                    android:layout_toRightOf="@+id/stop_but"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/chronoSize" />
+
+                <Button
+                    android:id="@+id/stop_but"
+                    style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/c_unbalance"
+                    android:paddingLeft="@dimen/card_padding"
+                    android:paddingRight="@dimen/card_padding"
+                    android:text="@string/stop"
+                    android:textColor="@color/white_pure"
+                    android:textSize="20sp" />
+
+                <Chronometer
+                    android:id="@+id/timer_total_countdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/timer_total"
+                    android:layout_alignBottom="@+id/timer_total"
+                    android:layout_toEndOf="@+id/timer_total"
+                    android:layout_toRightOf="@+id/timer_total"
+                    android:paddingLeft="@dimen/card_padding"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/titleSize" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/GoalCard"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/InfoCard"
+            android:layout_alignLeft="@+id/InfoCard"
+            android:layout_alignRight="@+id/InfoCard"
+            android:background="@color/Deep_Purple_900"
+            android:elevation="@dimen/card_elevation">
+
+            <RelativeLayout
+                android:id="@+id/goalLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:background="@color/clear">
 
-            <TextView
-                android:id="@+id/count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Count:3"
-                android:textSize="30dp"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+                <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                    android:id="@+id/timeProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/goal"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:indeterminate="false"
+                    app:rcBackgroundColor="@color/clear"
+                    app:rcMax="100"
+                    app:rcProgress="0"
+                    app:rcProgressColor="@color/c_balance"
+                    app:rcRadius="0dp" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/TimeCard"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="@dimen/card_margin"
-        android:layout_marginRight="@dimen/card_margin"
-        android:elevation="@dimen/card_elevation"
-        android:padding="@dimen/card_margin"
-        android:paddingLeft="@dimen/card_padding"
-        android:paddingRight="@dimen/card_padding"
-        android:paddingBottom="0dp">
+                <TextView
+                    android:id="@+id/goal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_vertical|center|center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/white_pure"
+                    android:textSize="@dimen/goal_size" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true">
+    </LinearLayout>
 
-            <Chronometer
-                android:id="@+id/timer_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/chronoSize"
-                android:textColor="@color/black"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/stop_but"
-                android:layout_toEndOf="@+id/stop_but"/>
-
-            <Button
-                android:id="@+id/stop_but"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/stop"
-                android:textSize="20sp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:background="@color/c_unbalance"
-                android:textColor="@color/white_pure"
-                style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
-                android:paddingLeft="@dimen/card_padding"
-                android:paddingRight="@dimen/card_padding"/>
-
-            <Chronometer
-                android:id="@+id/timer_total_countdown"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/titleSize"
-                android:textColor="@color/black"
-                android:layout_alignBaseline="@+id/timer_total"
-                android:layout_alignBottom="@+id/timer_total"
-                android:layout_toRightOf="@+id/timer_total"
-                android:layout_toEndOf="@+id/timer_total"
-                android:paddingLeft="@dimen/card_padding"/>
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/GoalCard"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/InfoCard"
-        android:layout_alignLeft="@+id/InfoCard"
-        android:layout_alignRight="@+id/InfoCard"
-        android:elevation="@dimen/card_elevation"
-        android:background="@color/Deep_Purple_900">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:background="@color/clear"
-            android:id="@+id/goalLayout">
-
-            <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/timeProgressBar"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:indeterminate="false"
-                android:layout_alignParentTop="true"
-                android:layout_alignBottom="@+id/goal"
-                app:rcBackgroundColor="@color/clear"
-                app:rcMax="100"
-                app:rcProgressColor="@color/c_balance"
-                app:rcProgress="0"
-                app:rcRadius="0dp"/>
-
-            <TextView
-                android:id="@+id/goal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|center|center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="@dimen/goal_size"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/white_pure"/>
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-</RelativeLayout>
+</LinearLayout>

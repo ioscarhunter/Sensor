@@ -7,7 +7,7 @@
     xmlns:android.support.design="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:keepScreenOn="true"
-    tools:context=".Meter.Meter">
+    tools:context=".meter.Meter">
 
     <include layout="@layout/content_meter"/>
 
